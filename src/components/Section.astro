@@ -1,0 +1,12 @@
+---
+const { color } = Astro.props;
+---
+
+<div class="area"><slot /></div>
+<style define:vars={{ color }}>
+  .area {
+    height: 100vh;
+    background-color: var(--color);
+    scroll-snap-align: start;
+  }
+</style>
