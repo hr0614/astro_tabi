@@ -1,1 +1,74 @@
-<div>Top</div>
+---
+import Menu from "../components/Menu.astro";
+import { Loading } from "./loading/Loading.tsx";
+---
+
+<div class="wrapper">
+  <Loading client:load />
+  <img class="main_image" src="/img/main_image.jpg" alt="" />
+  <div class="loop_area">
+    <div class="loop_down">
+      <img src="/img/wave.png" alt="" />
+    </div>
+    <div class="loop_down">
+      <img src="/img/wave.png" alt="" />
+    </div>
+    <div class="loop_down">
+      <img src="/img/wave.png" alt="" />
+    </div>
+    <div class="loop_down">
+      <img src="/img/wave.png" alt="" />
+    </div>
+    <div class="loop_down">
+      <img src="/img/wave.png" alt="" />
+    </div>
+    <div class="loop_down">
+      <img src="/img/wave.png" alt="" />
+    </div>
+  </div>
+  <div class="menu_area">
+    <Menu />
+  </div>
+  <div class="accent-img"></div>
+</div>
+
+<style>
+  .main_image {
+    width: 70%;
+  }
+  .wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+    background-color: #1d2027;
+  }
+
+  .loop_area {
+    flex-flow: column;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+  }
+
+  .menu_area {
+    position: absolute;
+    z-index: 10;
+    top: 12%;
+    right: 5%;
+  }
+
+  @keyframes loop_animation_down {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  .loop_down {
+    animation: loop_animation_down 7s linear infinite;
+    width: 100%;
+    margin-bottom: -1px;
+  }
+</style>

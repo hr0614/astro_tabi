@@ -1,0 +1,31 @@
+<section class="loop_area">
+  <div class="loop_down">
+    <img src="/img/wave.png" alt="" />
+  </div>
+  <div class="loop_down">
+    <img src="/img/wave.png" alt="" />
+  </div>
+</section>
+
+<style>
+  .loop_area {
+    flex-flow: column;
+    width: 100%;
+    /* position: relative; */
+    overflow: hidden;
+  }
+
+  @keyframes loop_animation_down {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  .loop_down {
+    animation: loop_animation_down 4s linear infinite;
+    width: 100%;
+  }
+</style>

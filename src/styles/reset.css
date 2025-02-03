@@ -23,14 +23,16 @@ dd {
   margin: 0
 }
 
-ul[role='list'],
-ol[role='list'] {
-  list-style: none
+ul,
+ol {
+  list-style: none;
+  padding: 0;
 }
 
 body {
   min-height: 100vh;
-  line-height: 1.5
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1,
