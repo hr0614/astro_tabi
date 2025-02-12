@@ -1,29 +1,32 @@
 ---
 import Menu from "../components/Menu.astro";
 import { Loading } from "./loading/Loading.tsx";
+import { Image } from "astro:assets";
+import mainImage from "../img/main_image.jpg";
+import loopImage from "../img/wave.png";
 ---
 
 <div class="wrapper">
   <Loading client:load />
-  <img class="main_image" src="/img/main_image.jpg" alt="" />
+  <Image class="main_image" src={mainImage} alt="" />
   <div class="loop_area">
     <div class="loop_down">
-      <img src="/img/wave.png" alt="" />
+      <Image src={loopImage} alt="" />
     </div>
     <div class="loop_down">
-      <img src="/img/wave.png" alt="" />
+      <Image src={loopImage} alt="" />
     </div>
     <div class="loop_down">
-      <img src="/img/wave.png" alt="" />
+      <Image src={loopImage} alt="" />
     </div>
     <div class="loop_down">
-      <img src="/img/wave.png" alt="" />
+      <Image src={loopImage} alt="" />
     </div>
     <div class="loop_down">
-      <img src="/img/wave.png" alt="" />
+      <Image src={loopImage} alt="" />
     </div>
     <div class="loop_down">
-      <img src="/img/wave.png" alt="" />
+      <Image src={loopImage} alt="" />
     </div>
   </div>
   <div class="menu_area">
@@ -35,6 +38,7 @@ import { Loading } from "./loading/Loading.tsx";
 <style>
   .main_image {
     width: 70%;
+    height: auto;
   }
   .wrapper {
     position: relative;
