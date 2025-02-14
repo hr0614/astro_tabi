@@ -1,19 +1,85 @@
 ---
 import { Image } from "astro:assets";
+import slide01 from "../img/illust/IMG_9926.jpg";
+import slide02 from "../img/illust/IMG_9927.jpg";
+import slide03 from "../img/illust/IMG_9928.jpg";
+import slide04 from "../img/illust/IMG_9935.jpg";
+import slide05 from "../img/illust/IMG_9938.jpg";
 ---
-
-<div>Illust</div>
 
 <div class="swiper">
   <!-- Additional required wrapper -->
   <div class="swiper-wrapper">
     <!-- Slides -->
-    <!-- <div class="swiper-slide"><Image src={slide01} alt="" /></div>
+    <div class="swiper-slide"><Image src={slide01} alt="" /></div>
     <div class="swiper-slide"><Image src={slide02} alt="" /></div>
     <div class="swiper-slide"><Image src={slide03} alt="" /></div>
     <div class="swiper-slide"><Image src={slide04} alt="" /></div>
-    <div class="swiper-slide"><Image src={slide05} alt="" /></div> -->
+    <div class="swiper-slide"><Image src={slide05} alt="" /></div>
   </div>
   <!-- If we need pagination -->
-  <div class="swiper-pagination"></div>
+  <!-- <div class="swiper-pagination"></div> -->
+
+  <!-- If we need navigation buttons -->
+  <div class="swiper-button swiper-button-prev"></div>
+  <div class="swiper-button swiper-button-next"></div>
+
+  <!-- If we need scrollbar -->
+  <!-- <div class="swiper-scrollbar"></div> -->
 </div>
+
+<style>
+  .swiper {
+    display: flex;
+    padding: 5px;
+  }
+  .swiper-wrapper {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .swiper-slide img {
+    max-height: 400px;
+    padding: 5px;
+    border-radius: 30px;
+    object-fit: cover;
+  }
+
+  .swiper-button::after {
+    font-size: 32px;
+    color: rgb(215, 119, 22);
+  }
+</style>
+
+<script>
+  import Swiper from "swiper";
+  import { Navigation, Pagination } from "swiper/modules";
+  import "swiper/css/bundle";
+
+  export const swiperConfig = {
+    modules: [Navigation, Pagination],
+    // Optional parameters
+    loop: true,
+    slidesPerView: 4,
+
+    // If we need pagination
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+
+    // Navigation arrows
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+
+    // And if we need scrollbar
+    scrollbar: {
+      el: ".swiper-scrollbar",
+    },
+  };
+
+  const swiper = new Swiper(".swiper", swiperConfig);
+</script>

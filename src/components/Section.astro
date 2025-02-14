@@ -1,12 +1,18 @@
 ---
-const { color } = Astro.props;
+const { color, rounded = true } = Astro.props;
 ---
 
-<div class="area"><slot /></div>
+<div class:list={["area", { rounded: rounded }]}><slot /></div>
+
 <style define:vars={{ color }}>
   .area {
     height: 100vh;
     background-color: var(--color);
     scroll-snap-align: start;
+  }
+
+  .rounded {
+    display: flex;
+    align-items: center;
   }
 </style>

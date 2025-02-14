@@ -7,7 +7,7 @@ import loopImage from "../img/wave.png";
 ---
 
 <div class="wrapper">
-  <Loading client:load />
+  <!-- <Loading client:load /> -->
   <Image class="main_image" src={mainImage} alt="" />
   <div class="loop_area">
     <div class="loop_down">
@@ -32,7 +32,6 @@ import loopImage from "../img/wave.png";
   <div class="menu_area">
     <Menu />
   </div>
-  <div class="accent-img"></div>
 </div>
 
 <style>
@@ -57,8 +56,9 @@ import loopImage from "../img/wave.png";
   .menu_area {
     position: absolute;
     z-index: 10;
-    top: 12%;
-    right: 5%;
+    top: 10vh;
+    right: 2vw;
+    width: 30%;
   }
 
   @keyframes loop_animation_down {

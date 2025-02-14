@@ -1,3 +1,8 @@
+---
+import { Image } from "astro:assets";
+import accentImg from "../img/15.png";
+---
+
 <div class="menu_wrapper">
   <div class="title_text">tabi :)<br />Illustration</div>
   <div class="menu_list">
@@ -10,6 +15,7 @@
     </ul>
   </div>
   <div class="social_items">hoge hoge hoge</div>
+  <Image src={accentImg} class="accent-img" alt="" />
 </div>
 
 <style>
@@ -26,27 +32,28 @@
     font-family: "Oooh Baby", serif;
     font-weight: 200;
     font-style: normal;
-    font-size: 45px;
-    letter-spacing: 3px;
-    line-height: 55px;
+    font-size: min(5vw, 45px);
+    letter-spacing: min(0.5vw, 4px);
+    line-height: min(5vw, 50px);
     width: 100%;
     text-align: center;
-    margin: 10px, 20px;
+    /* margin: 10px 20px; */
     color: white;
   }
 
   .menu_list {
-    margin: 50px 0;
+    margin: 5vh 0;
     width: 130px;
   }
   .menu_title {
     font-family: "M PLUS Rounded 1c", serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 23px;
-    letter-spacing: 1px;
+    font-size: min(2.5vw, 25px);
+    letter-spacing: 0.1vw;
     color: #ededed;
     text-align: center;
+    line-height: min(3.5vw, 30px);
   }
 
   .menu_title:hover {
@@ -56,5 +63,11 @@
 
   .social_items {
     color: aquamarine;
+  }
+  .accent-img {
+    padding-top: 25%;
+    width: 25vw;
+    max-width: 300px;
+    height: auto;
   }
 </style>
