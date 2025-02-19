@@ -1,8 +1,15 @@
 ---
-const { color, rounded = true } = Astro.props;
+import { Image } from "astro:assets";
+const { color, rounded = true, headImage, footImage } = Astro.props;
 ---
 
-<div class:list={["area", { rounded: rounded }]}><slot /></div>
+<div class:list={["area", { rounded: rounded }]}>
+  {headImage && <Image class="head_image" src={headImage} alt="" />}
+
+  <slot />
+
+  {footImage && <Image class="foot_image" src={footImage} alt="" />}
+</div>
 
 <style define:vars={{ color }}>
   .area {
@@ -14,5 +21,15 @@ const { color, rounded = true } = Astro.props;
   .rounded {
     display: flex;
     align-items: center;
+    flex-flow: column;
+  }
+
+  .head_image {
+    width: 200px;
+    height: auto;
+  }
+  .foot_image {
+    width: 200px;
+    height: auto;
   }
 </style>
