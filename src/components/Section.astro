@@ -4,11 +4,23 @@ const { color, rounded = true, headImage, footImage } = Astro.props;
 ---
 
 <div class:list={["area", { rounded: rounded }]}>
-  {headImage && <Image class="head_image" src={headImage} alt="" />}
+  {
+    headImage && (
+      <div class="head_container">
+        <Image class="head_image" src={headImage} alt="" />
+      </div>
+    )
+  }
 
   <slot />
 
-  {footImage && <Image class="foot_image" src={footImage} alt="" />}
+  {
+    footImage && (
+      <div class="foot_container">
+        <Image class="foot_image" src={footImage} alt="" />
+      </div>
+    )
+  }
 </div>
 
 <style define:vars={{ color }}>
@@ -20,8 +32,18 @@ const { color, rounded = true, headImage, footImage } = Astro.props;
 
   .rounded {
     display: flex;
-    align-items: center;
-    flex-flow: column;
+    justify-content: space-around;
+    flex-direction: column;
+  }
+
+  .head_container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .foot_container {
+    display: flex;
+    justify-content: right;
   }
 
   .head_image {

@@ -7,48 +7,76 @@ import slide04 from "../img/illust/IMG_9935.jpg";
 import slide05 from "../img/illust/IMG_9938.jpg";
 ---
 
-<div class="swiper">
-  <!-- Additional required wrapper -->
-  <div class="swiper-wrapper">
-    <!-- Slides -->
-    <div class="swiper-slide"><Image src={slide01} alt="" /></div>
-    <div class="swiper-slide"><Image src={slide02} alt="" /></div>
-    <div class="swiper-slide"><Image src={slide03} alt="" /></div>
-    <div class="swiper-slide"><Image src={slide04} alt="" /></div>
-    <div class="swiper-slide"><Image src={slide05} alt="" /></div>
+<div class="container">
+  <div class="swiper">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+      <!-- Slides -->
+      <div class="swiper-slide"><Image src={slide01} alt="" /></div>
+      <div class="swiper-slide"><Image src={slide02} alt="" /></div>
+      <div class="swiper-slide"><Image src={slide03} alt="" /></div>
+      <div class="swiper-slide"><Image src={slide04} alt="" /></div>
+      <div class="swiper-slide"><Image src={slide05} alt="" /></div>
+    </div>
+
+    <!-- If we need scrollbar -->
+    <!-- <div class="swiper-scrollbar"></div> -->
   </div>
   <!-- If we need pagination -->
-  <!-- <div class="swiper-pagination"></div> -->
+  <div class="swiper-pagination"></div>
 
   <!-- If we need navigation buttons -->
   <div class="swiper-button swiper-button-prev"></div>
   <div class="swiper-button swiper-button-next"></div>
-
-  <!-- If we need scrollbar -->
-  <!-- <div class="swiper-scrollbar"></div> -->
 </div>
 
 <style>
+  .container {
+    margin-inline: auto;
+    max-width: 85%;
+    position: relative;
+  }
   .swiper {
     display: flex;
-    padding: 5px;
   }
   .swiper-wrapper {
-    max-width: 100%;
     display: flex;
     align-items: center;
   }
 
+  .swiper-slide {
+    padding: 8px;
+  }
+
   .swiper-slide img {
     max-height: 400px;
-    padding: 5px;
     border-radius: 30px;
     object-fit: cover;
+    box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.3);
   }
 
   .swiper-button::after {
     font-size: 32px;
-    color: rgb(215, 119, 22);
+    color: rgb(255, 255, 255);
+  }
+  /* 前への矢印 */
+  .swiper-button-prev {
+    left: -30px;
+  }
+  /* 次への矢印 */
+  .swiper-button-next {
+    right: -30px;
+  }
+  /* ページネーション */
+  .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: -25px;
+  }
+
+  .swiper-pagination {
+    .swiper-pagination-bullet-active {
+      /*ドットの色を変更*/
+      background-color: #ffffff;
+    }
   }
 </style>
 
@@ -80,6 +108,5 @@ import slide05 from "../img/illust/IMG_9938.jpg";
       el: ".swiper-scrollbar",
     },
   };
-
   const swiper = new Swiper(".swiper", swiperConfig);
 </script>
