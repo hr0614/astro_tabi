@@ -3,15 +3,7 @@ import { motion } from "framer-motion";
 import s from "../infoContents/infoContents.module.css"
 import InfoItem from "./InfoItem"
 
-const fetchCatFactsData = async (setData) => {
-  const res = await fetch("https://hari-test.microcms.io/api/v1/info", {
-    headers: {
-      "X-MICROCMS-API-KEY": "c0aSqVH637iloNXUyIZnlKzv0S3UTA3SRhXP",
-    },
-  });
-  const data = await res.json()
-  setData(data.contents)
-}
+
 
 // const data = [
 //   {
@@ -51,20 +43,36 @@ const fetchCatFactsData = async (setData) => {
 //     category: "info"
 //   },
 // ]
+type Item = {
+  title: string,
+  thumbnail?: {
+    url: string
+  },
+  publishedAt: string,
+  category: string[]
+}
 
 export const InfoContents = () => {
-  const [cats, setCatsData] = useState()
-
-  console.log(cats);
+  const [items, setItems] = useState<Item[]>()
+  // console.log(cats);
+  const fetchItems = async () => {
+    const res = await fetch("https://hari-test.microcms.io/api/v1/info", {
+      headers: {
+        "X-MICROCMS-API-KEY": "c0aSqVH637iloNXUyIZnlKzv0S3UTA3SRhXP",
+      },
+    });
+    const data = await res.json()
+    setItems(data.contents)
+  }
 
   useEffect(() => {
-    fetchCatFactsData(setCatsData)
+    fetchItems()
   }, [])
 
   return (
     <motion.div className={s.infoList}>
       <ul className={s.infoItems}>
-        {cats && cats.map((item, index) => {
+        {items && items.map((item, index) => {
           return (
             <li className={s.item} key={index}>
               <InfoItem title={item.title}

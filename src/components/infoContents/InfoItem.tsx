@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 
 type Props = {
   title: string,
-  imageUrl: string,
+  imageUrl: string | undefined,
   date: string,
   category: string
 }
