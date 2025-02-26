@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-const { color, rounded = true, headImage, footImage } = Astro.props;
+const { color, height, rounded = true, headImage, footImage } = Astro.props;
 ---
 
 <div class:list={["area", { rounded: rounded }]}>
@@ -23,9 +23,10 @@ const { color, rounded = true, headImage, footImage } = Astro.props;
   }
 </div>
 
-<style define:vars={{ color }}>
+<style define:vars={{ color, height }}>
   .area {
     height: 100vh;
+    min-height: var(--height);
     background-color: var(--color);
     scroll-snap-align: start;
   }
