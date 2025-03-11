@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { motion } from "framer-motion";
 import s from "../infoContents/infoContents.module.css"
 import InfoItem from "./InfoItem"
 
@@ -49,7 +48,7 @@ type Item = {
     url: string
   },
   publishedAt: string,
-  category: string[]
+  category: string[],
 }
 
 export const InfoContents = () => {
@@ -70,7 +69,7 @@ export const InfoContents = () => {
   }, [])
 
   return (
-    <motion.div className={s.infoList}>
+    <div className={s.infoList} >
       <ul className={s.infoItems}>
         {items && items.map((item, index) => {
           return (
@@ -83,7 +82,7 @@ export const InfoContents = () => {
           )
         })}
       </ul>
-    </motion.div>
+    </div>
 
   )
 }

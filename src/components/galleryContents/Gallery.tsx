@@ -2,6 +2,7 @@ import { div } from 'framer-motion/client';
 import React, { useState, useEffect } from 'react'
 // import s from '../galleryContents/gallery.module.css'
 import Masonry from 'react-layout-masonry';
+import Item from '../galleryContents/Item';
 
 
 type Item = {
@@ -9,7 +10,7 @@ type Item = {
     url: string
   },
   category: string[],
-  comment: string[]
+  comment: string[],
 }
 
 
@@ -36,7 +37,10 @@ export const Gallery = () => {
       gap={16}
     >
       {items && items.map((item, index) => {
-        return <img src={item.image?.url} alt="" key={index} />;
+        // return <img src={item.image?.url} alt="" key={index} />;
+        return (
+          <Item imageUrl={item.image?.url} index={index} />
+        )
       })}
     </Masonry>
   )
