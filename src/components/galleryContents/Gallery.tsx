@@ -18,7 +18,7 @@ export const Gallery = () => {
   const [items, setItems] = useState<Item[]>()
   console.log(items);
   const fetchItems = async () => {
-    const res = await fetch("https://hari-test.microcms.io/api/v1/gallery", {
+    const res = await fetch("https://hari-test.microcms.io/api/v1/gallery?filters=category[contains]Original", {
       headers: {
         "X-MICROCMS-API-KEY": "c0aSqVH637iloNXUyIZnlKzv0S3UTA3SRhXP",
       },
