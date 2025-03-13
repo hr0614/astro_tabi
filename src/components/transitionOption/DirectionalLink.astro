@@ -1,0 +1,111 @@
+---
+interface Props {
+  href: string;
+  direction?: "left" | "right" | "up" | "down";
+  class?: string;
+}
+
+const { href, direction = "right", class: className = "" } = Astro.props;
+---
+
+<a
+  href={href}
+  data-astro-transition
+  data-direction={direction}
+  class={className}
+>
+  <slot />
+</a>
+
+<script>
+  document.addEventListener("astro:before-preparation", (event) => {
+    const link = event.target as HTMLAnchorElement;
+
+    if (link && link.hasAttribute("data-direction")) {
+      const direction = link.getAttribute("data-direction");
+      document.documentElement.setAttribute(
+        "data-slide-direction",
+        direction || "right",
+      );
+    }
+  });
+
+  document.addEventListener("astro:page-load", () => {
+    document.documentElement.removeAttribute("data-slide-direction");
+  });
+</script>
+
+<style is:global>
+  /* 右方向のスライド (デフォルト) */
+  html[data-slide-direction="right"] ::view-transition-old(root) {
+    animation-name: slide-to-left !important;
+  }
+
+  html[data-slide-direction="right"] ::view-transition-new(root) {
+    animation-name: slide-from-right !important;
+  }
+
+  /* 左方向のスライド */
+  html[data-slide-direction="left"] ::view-transition-old(root) {
+    animation-name: slide-to-right !important;
+  }
+
+  html[data-slide-direction="left"] ::view-transition-new(root) {
+    animation-name: slide-from-left !important;
+  }
+
+  /* 上方向のスライド */
+  html[data-slide-direction="up"] ::view-transition-old(root) {
+    animation-name: slide-to-bottom !important;
+  }
+
+  html[data-slide-direction="up"] ::view-transition-new(root) {
+    animation-name: slide-from-top !important;
+  }
+
+  /* 下方向のスライド */
+  html[data-slide-direction="down"] ::view-transition-old(root) {
+    animation-name: slide-to-top !important;
+  }
+
+  html[data-slide-direction="down"] ::view-transition-new(root) {
+    animation-name: slide-from-bottom !important;
+  }
+
+  /* 追加のアニメーション定義 */
+  @keyframes slide-from-left {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-to-right {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes slide-to-top {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-100%);
+    }
+  }
+
+  @keyframes slide-from-bottom {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+</style>

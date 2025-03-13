@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 const { color, height, rounded = true, headImage, footImage } = Astro.props;
+// import TransitionLink from "../components/transitionOption/TransitionLink.astro";
 ---
 
 <div class:list={["area", { rounded: rounded }]}>
@@ -17,7 +18,13 @@ const { color, height, rounded = true, headImage, footImage } = Astro.props;
   {
     footImage && (
       <div class="foot_container">
-        <Image class="foot_image" src={footImage} alt="" />
+        {/* <TransitionLink href="/gallery" transition="slide">
+          <Image class="foot_image" src={footImage} alt="" />
+        </TransitionLink> */}
+
+        <a href="/gallery">
+          <Image class="foot_image" src={footImage} alt="" />
+        </a>
       </div>
     )
   }
