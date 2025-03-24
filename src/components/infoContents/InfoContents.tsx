@@ -55,7 +55,7 @@ export const InfoContents = () => {
   const [items, setItems] = useState<Item[]>()
   // console.log(cats);
   const fetchItems = async () => {
-    const res = await fetch("https://hari-test.microcms.io/api/v1/info", {
+    const res = await fetch("https://hari-test.microcms.io/api/v1/info?limit=6", {
       headers: {
         "X-MICROCMS-API-KEY": "c0aSqVH637iloNXUyIZnlKzv0S3UTA3SRhXP",
       },
