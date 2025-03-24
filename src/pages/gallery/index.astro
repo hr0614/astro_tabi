@@ -1,5 +1,8 @@
 ---
 import { Gallery } from "../../components/galleryContents/Gallery.tsx";
+import Layout from "../../layouts/Layout.astro";
 ---
 
-<Gallery client:load />
+<Layout title="Gallery">
+  <Gallery client:only />
+</Layout>

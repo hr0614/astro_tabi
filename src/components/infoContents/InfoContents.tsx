@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { motion } from "framer-motion";
 import s from "../infoContents/infoContents.module.css"
 import InfoItem from "./InfoItem"
 
@@ -49,14 +48,14 @@ type Item = {
     url: string
   },
   publishedAt: string,
-  category: string[]
+  category: string[],
 }
 
 export const InfoContents = () => {
   const [items, setItems] = useState<Item[]>()
   // console.log(cats);
   const fetchItems = async () => {
-    const res = await fetch("https://hari-test.microcms.io/api/v1/info", {
+    const res = await fetch("https://hari-test.microcms.io/api/v1/info?limit=6", {
       headers: {
         "X-MICROCMS-API-KEY": "c0aSqVH637iloNXUyIZnlKzv0S3UTA3SRhXP",
       },
@@ -70,7 +69,7 @@ export const InfoContents = () => {
   }, [])
 
   return (
-    <motion.div className={s.infoList}>
+    <div className={s.infoList} >
       <ul className={s.infoItems}>
         {items && items.map((item, index) => {
           return (
@@ -83,7 +82,7 @@ export const InfoContents = () => {
           )
         })}
       </ul>
-    </motion.div>
+    </div>
 
   )
 }

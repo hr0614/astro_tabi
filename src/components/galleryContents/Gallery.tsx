@@ -1,37 +1,77 @@
 import React, { useState, useEffect } from 'react'
-// import s from '../galleryContents/gallery.module.css'
+import s from '../galleryContents/gallery.module.css'
+import Masonry from 'react-layout-masonry';
+import Item from '../galleryContents/Item';
+import { div } from 'framer-motion/client';
 
-
-// type Item = {
-//   image?: {
-//     url: string
-//   },
-//   category: string[],
-//   comment: string[]
-// // }
-// <Item[]>
+type Item = {
+  image?: {
+    url: string
+  },
+  category: string[],
+  comment: string[],
+}
 
 export const Gallery = () => {
-  const [items, setItems] = useState()
-  console.log(items);
-  const fetchItems = async () => {
-    const res = await fetch("https://hari-test.microcms.io/api/v1/gallery", {
-      headers: {
-        "X-MICROCMS-API-KEY": "c0aSqVH637iloNXUyIZnlKzv0S3UTA3SRhXP",
-      },
-    });
-    const data = await res.json()
-    setItems(data.contents)
-  }
+  // 初期値を設定せずに、ローディング状態を追加
+  const [items, setItems] = useState<Item[]>([])
+  const [category, setCategory] = useState<string | null>(null)
 
+
+  // コンポーネントマウント時に一度だけURLパラメータを取得
   useEffect(() => {
-    fetchItems()
-  }, [])
+    // URLからクエリパラメータを取得
+    const params = new URLSearchParams(window.location.search);
+    const categoryParam = params.get('category');
+
+    // クエリパラメータが存在する場合はその値を、なければデフォルト値を設定
+    setCategory(categoryParam || "Original");
+  }, []);
+
+  // categoryが設定された後にのみデータを取得
+  useEffect(() => {
+    // categoryがnullの場合は何もしない（初期化前）
+    if (category === null) return;
+
+    const fetchItems = async () => {
+      try {
+        const res = await fetch(`https://hari-test.microcms.io/api/v1/gallery?filters=category[contains]${category}`, {
+          headers: {
+            "X-MICROCMS-API-KEY": import.meta.env.PUBLIC_MICROCMS_API_KEY || '',
+          },
+        });
+        const data = await res.json();
+        setItems(data.contents);
+      } catch (error) {
+        console.error("データの取得に失敗しました", error);
+      }
+    };
+
+    fetchItems();
+  }, [category]); // categoryが変更されたときだけ実行
+
+
 
   return (
-    <div className='gallery_wrapper'>
-      hoge
+    <div className={s.wrapper}>
+      <div className={s.header}>
+        <a href="/gallery" className={`${s.nav} ${s.original_button}`}>Original</a>
+        <a href="/gallery?category=Work" className={`${s.nav} ${s.work_button}`}>Work</a>
+      </div>
+      <div className={s.image_area}>
+        <Masonry
+          columns={4}
+          gap={16}
+        >
+          {items && items.map((item, index) => {
+            return (
+              <Item imageUrl={item.image?.url} index={index} key={index} />
+            )
+          })}
+        </Masonry>
+      </div>
     </div>
   )
 }
+
 
