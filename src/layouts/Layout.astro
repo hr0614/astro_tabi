@@ -1,15 +1,18 @@
 ---
 import "../styles/reset.css";
 import "../styles/fonts.css";
+import { ViewTransitions } from "astro:transitions";
+
 interface Props {
 	title: string;
+	defaultTransition?: string; // ページのデフォルトトランジション
 }
 
-const { title } = Astro.props;
+const { title, defaultTransition = "fade" } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-default-transition={defaultTransition}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
@@ -17,8 +20,147 @@ const { title } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<ViewTransitions fallback="swap" />
+
+		<script>
+			// 最も確実なブラウザバック検出方法
+			document.addEventListener(
+				"astro:page-load",
+				() => {
+					// 現在のURLを保存
+					let currentPath = window.location.pathname;
+
+					// popstateイベントでブラウザバックを検出
+					window.addEventListener("popstate", () => {
+						console.log("Browser back/forward detected");
+
+						// ビュートランジションを完全に無効化
+						document.documentElement.classList.add("no-transitions");
+
+						// 通常のページ遷移を強制
+						window.location.reload();
+					});
+
+					// ページ遷移時にパスを更新
+					document.addEventListener("astro:after-swap", () => {
+						currentPath = window.location.pathname;
+
+						// トランジションクラスを削除
+						document.documentElement.classList.remove("no-transitions");
+					});
+				},
+				{ once: true },
+			);
+		</script>
 	</head>
 	<body>
 		<slot />
 	</body>
 </html>
+
+<style is:global>
+	/* トランジションのベーススタイル */
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation-duration: 0.5s;
+		animation-timing-function: ease;
+	}
+
+	/* フェードトランジション（デフォルト） */
+	html[data-default-transition="fade"] ::view-transition-old(root) {
+		animation-name: fade-out;
+	}
+
+	html[data-default-transition="fade"] ::view-transition-new(root) {
+		animation-name: fade-in;
+	}
+
+	/* スライドトランジション */
+	html[data-default-transition="slide"] ::view-transition-old(root) {
+		animation-name: slide-to-left;
+	}
+
+	html[data-default-transition="slide"] ::view-transition-new(root) {
+		animation-name: slide-from-right;
+	}
+
+	/* ズームトランジション */
+	html[data-default-transition="zoom"] ::view-transition-old(root) {
+		animation-name: zoom-out;
+	}
+
+	html[data-default-transition="zoom"] ::view-transition-new(root) {
+		animation-name: zoom-in;
+	}
+
+	/* ビュートランジションを完全に無効化 */
+	html.no-transitions,
+	html.no-transitions * {
+		view-transition-name: none !important;
+	}
+
+	html.no-transitions::view-transition-group(*),
+	html.no-transitions::view-transition-old(*),
+	html.no-transitions::view-transition-new(*) {
+		animation: none !important;
+	}
+
+	/* アニメーションの定義 */
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes fade-out {
+		from {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+		}
+	}
+
+	@keyframes slide-from-right {
+		from {
+			transform: translateX(100%);
+		}
+		to {
+			transform: translateX(0);
+		}
+	}
+
+	@keyframes slide-to-left {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-100%);
+		}
+	}
+
+	@keyframes zoom-in {
+		from {
+			transform: scale(0.8);
+			opacity: 0;
+		}
+		to {
+			transform: scale(1);
+			opacity: 1;
+		}
+	}
+
+	@keyframes zoom-out {
+		from {
+			transform: scale(1);
+			opacity: 1;
+		}
+		to {
+			transform: scale(1.2);
+			opacity: 0;
+		}
+	}
+</style>

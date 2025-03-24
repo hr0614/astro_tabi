@@ -1,0 +1,122 @@
+---
+interface Props {
+  href: string;
+  transition?: string;
+  class?: string;
+}
+
+const { href, transition, class: className = "" } = Astro.props;
+---
+
+<a
+  href={href}
+  data-astro-transition
+  data-transition={transition}
+  class={className}
+>
+  <slot />
+</a>
+
+<script>
+  // リンクごとのトランジション処理
+  document.addEventListener("astro:before-preparation", (event) => {
+    // クリックされたリンクを取得
+    const link = event.target as HTMLAnchorElement;
+
+    // リンクにトランジション属性があるか確認
+    if (link && link.hasAttribute("data-transition")) {
+      const transitionType = link.getAttribute("data-transition");
+
+      // 現在のデフォルトトランジションを保存
+      const currentDefault = document.documentElement.getAttribute(
+        "data-default-transition",
+      );
+
+      // 一時的なトランジション属性を設定
+      document.documentElement.setAttribute(
+        "data-active-transition",
+        transitionType || "",
+      );
+
+      // 元のデフォルトトランジションを保存
+      document.documentElement.setAttribute(
+        "data-previous-transition",
+        currentDefault || "",
+      );
+    }
+  });
+
+  // ページ遷移後に元のデフォルトトランジションに戻す
+  document.addEventListener("astro:page-load", () => {
+    const previousTransition = document.documentElement.getAttribute(
+      "data-previous-transition",
+    );
+    const activeTransition = document.documentElement.getAttribute(
+      "data-active-transition",
+    );
+
+    // アクティブなトランジションがある場合は、それを削除
+    if (activeTransition) {
+      document.documentElement.removeAttribute("data-active-transition");
+    }
+
+    // 前のトランジションがある場合は、それを削除
+    if (previousTransition) {
+      document.documentElement.removeAttribute("data-previous-transition");
+    }
+  });
+</script>
+
+<style is:global>
+  /* リンク固有のトランジションスタイル */
+  html[data-active-transition="fade"] ::view-transition-old(root) {
+    animation-name: fade-out !important;
+  }
+
+  html[data-active-transition="fade"] ::view-transition-new(root) {
+    animation-name: fade-in !important;
+  }
+
+  html[data-active-transition="slide"] ::view-transition-old(root) {
+    animation-name: slide-to-left !important;
+  }
+
+  html[data-active-transition="slide"] ::view-transition-new(root) {
+    animation-name: slide-from-right !important;
+  }
+
+  html[data-active-transition="zoom"] ::view-transition-old(root) {
+    animation-name: zoom-out !important;
+  }
+
+  html[data-active-transition="zoom"] ::view-transition-new(root) {
+    animation-name: zoom-in !important;
+  }
+
+  /* 追加のトランジション: 上からスライド */
+  html[data-active-transition="slide-down"] ::view-transition-old(root) {
+    animation-name: slide-to-bottom !important;
+  }
+
+  html[data-active-transition="slide-down"] ::view-transition-new(root) {
+    animation-name: slide-from-top !important;
+  }
+
+  @keyframes slide-from-top {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-to-bottom {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(100%);
+    }
+  }
+</style>
