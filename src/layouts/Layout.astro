@@ -2,6 +2,7 @@
 import "../styles/reset.css";
 import "../styles/fonts.css";
 import { ViewTransitions } from "astro:transitions";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 
 interface Props {
 	title: string;
@@ -21,6 +22,10 @@ const { title, defaultTransition = "fade" } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<ViewTransitions fallback="swap" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+		/>
 
 		<script>
 			// 最も確実なブラウザバック検出方法

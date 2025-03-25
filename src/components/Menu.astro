@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import accentImg from "../img/15.png";
+import accentTop from "../img/menu/02.png";
+import accentBottom from "../img/menu/01.png";
 ---
 
 <div class="menu_wrapper">
@@ -13,14 +14,16 @@ import accentImg from "../img/15.png";
       <li class="menu_title">Work</li>
       <li class="menu_title">Contact</li>
     </ul>
+    <Image src={accentTop} class="accent-top" alt="" />
+    <Image src={accentBottom} class="accent-bottom" alt="" />
   </div>
-  <div class="social_items">hoge hoge hoge</div>
-  <Image src={accentImg} class="accent-img" alt="" />
+  <div class="social_items">
+    <i class="fa-brands fa-instagram social_icon"></i>
+    <i class="fa-brands fa-x-twitter social_icon"></i>
+  </div>
 </div>
 
 <style>
-  /* @import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&family=Oooh+Baby&display=swap"); */
-
   .menu_wrapper {
     display: flex;
     flex-direction: column;
@@ -29,11 +32,11 @@ import accentImg from "../img/15.png";
   }
 
   .title_text {
-    font-family: "Oooh Baby", serif;
+    font-family: "Playwrite NZ", serif;
     font-weight: 200;
     font-style: normal;
     font-size: min(5vw, 45px);
-    letter-spacing: min(0.5vw, 4px);
+    letter-spacing: 0px;
     line-height: min(5vw, 50px);
     width: 100%;
     text-align: center;
@@ -42,32 +45,56 @@ import accentImg from "../img/15.png";
   }
 
   .menu_list {
-    margin: 5vh 0;
-    width: 130px;
+    position: relative;
+    margin-top: 10vh;
+    width: 17vw;
+    background-color: #ededed;
+    padding: 44px 0;
+    border-radius: 25px;
   }
   .menu_title {
-    font-family: "M PLUS Rounded 1c", serif;
+    font-family: "Rowdies Regular", serif;
     font-weight: 400;
     font-style: normal;
     font-size: min(2.5vw, 25px);
     letter-spacing: 0.1vw;
-    color: #ededed;
+    color: #1d2027;
     text-align: center;
     line-height: min(3.5vw, 30px);
+    padding: 5px 0px;
   }
 
   .menu_title:hover {
-    background-color: #ff896d;
-    color: #ededed;
+    background-color: #5fd3c6;
+    color: #ffffff;
+  }
+
+  .accent-top {
+    position: absolute;
+    top: 0px;
+    left: -90px;
+    width: 12vw;
+    min-width: 170px;
+    height: auto;
+  }
+  .accent-bottom {
+    position: absolute;
+    bottom: -4px;
+    right: -75px;
+    width: 10vw;
+    min-width: 140px;
+    height: auto;
   }
 
   .social_items {
-    color: aquamarine;
+    margin-top: 16px;
   }
-  .accent-img {
-    padding-top: 25%;
-    width: 25vw;
-    max-width: 300px;
-    height: auto;
+  .social_icon {
+    font-size: 40px;
+    color: #5fd3c6;
+  }
+
+  .social_icon:hover {
+    opacity: 0.5;
   }
 </style>

@@ -3,32 +3,11 @@ import Menu from "../components/Menu.astro";
 import { Loading } from "./loading/Loading.tsx";
 import { Image } from "astro:assets";
 import mainImage from "../img/main_image.jpg";
-import loopImage from "../img/wave.png";
 ---
 
 <div class="wrapper">
   <!-- <Loading client:load /> -->
   <Image class="main_image" src={mainImage} alt="" />
-  <div class="loop_area">
-    <div class="loop_down">
-      <Image src={loopImage} alt="" />
-    </div>
-    <div class="loop_down">
-      <Image src={loopImage} alt="" />
-    </div>
-    <div class="loop_down">
-      <Image src={loopImage} alt="" />
-    </div>
-    <div class="loop_down">
-      <Image src={loopImage} alt="" />
-    </div>
-    <div class="loop_down">
-      <Image src={loopImage} alt="" />
-    </div>
-    <div class="loop_down">
-      <Image src={loopImage} alt="" />
-    </div>
-  </div>
   <div class="menu_area">
     <Menu />
   </div>
@@ -36,9 +15,28 @@ import loopImage from "../img/wave.png";
 
 <style>
   .main_image {
-    width: 70%;
+    width: 60%;
     height: auto;
   }
+
+  @media screen and (min-width: 840px) and (max-width: 920px) {
+    .main_image {
+      width: auto;
+      height: 100%;
+    }
+  }
+
+  @media screen and (max-width: 839px) {
+    .main_image {
+      width: 100%;
+      height: auto;
+    }
+
+    .menu_area {
+      display: none;
+    }
+  }
+
   .wrapper {
     position: relative;
     overflow: hidden;
@@ -46,33 +44,11 @@ import loopImage from "../img/wave.png";
     background-color: #1d2027;
   }
 
-  .loop_area {
-    flex-flow: column;
-    position: absolute;
-    z-index: 1;
-    top: 0px;
-  }
-
   .menu_area {
     position: absolute;
     z-index: 10;
     top: 10vh;
-    right: 2vw;
+    right: 3vw;
     width: 30%;
-  }
-
-  @keyframes loop_animation_down {
-    0% {
-      transform: translateY(-100%);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-
-  .loop_down {
-    animation: loop_animation_down 7s linear infinite;
-    width: 100%;
-    margin-bottom: -1px;
   }
 </style>

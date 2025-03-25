@@ -21,3 +21,19 @@
   font-style: normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: 'Rowdies Regular';
+  src: url('/fonts/Rowdies/Rowdies-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Playwrite NZ';
+  src: url('/fonts/Playwrite_NZ/static/PlaywriteNZ-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
