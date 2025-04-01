@@ -1,5 +1,5 @@
 import s from "../infoContents/infoItem.module.css"
-import infosample from "../../img/info/infosample.jpg"
+import infosample from "../../img/info/noimage.jpg"
 import dayjs from 'dayjs';
 import { motion } from "framer-motion";
 
@@ -18,7 +18,7 @@ export default function InfoItem(props: Props) {
       <div className={s.textArea}>
         <div className={s.dateWrapper}>
           <div className={s.date}>{formattedDate}</div>
-          <div className={s.categoryLabel}>{props.category}</div>
+          <div className={s.categoryLabel} data-category={props.category}>{props.category}</div>
         </div>
         <div className={s.title}>{props.title}</div>
       </div>

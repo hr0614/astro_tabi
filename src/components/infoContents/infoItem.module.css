@@ -30,17 +30,38 @@
 }
 
 .date {
-  font-size: 18px;
-  padding: 0 10px;
+  font-size: 14px;
+  font-family: 'Lexend Deca';
+  color: #1D2027;
+  padding: 3px 10px;
 }
 
 .categoryLabel {
-  font-size: 16px;
-  color: red;
-  padding: 0 10px;
+  font-family: 'M PLUS Rounded 1c';
+  font-size: 12px;
+  color: white;
+  padding: 4px 6px;
+}
+
+/* カテゴリー別の背景色 */
+.categoryLabel[data-category="お仕事"] {
+  background-color: #A4E1EA;
+}
+
+.categoryLabel[data-category="イベント"] {
+  background-color: #C3DD9E;
+}
+
+.categoryLabel[data-category="お知らせ"] {
+  background-color: #F4B4A5;
+
 }
 
 .title {
   font-size: 16px;
+  font-family: 'M PLUS Rounded 1c';
+  font-weight: bold;
+  color: #1D2027;
+  letter-spacing: 1px;
   padding: 0 10px 10px 10px;
 }
