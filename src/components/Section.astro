@@ -5,6 +5,7 @@ const { color, height, rounded = true, headImage, footImage } = Astro.props;
 ---
 
 <div class:list={["area", { rounded: rounded }]}>
+  <slot name="background" />
   {
     headImage && (
       <div class="head_container">
@@ -36,6 +37,7 @@ const { color, height, rounded = true, headImage, footImage } = Astro.props;
     min-height: var(--height);
     background-color: var(--color);
     scroll-snap-align: start;
+    position: relative;
   }
 
   .rounded {
@@ -47,11 +49,15 @@ const { color, height, rounded = true, headImage, footImage } = Astro.props;
   .head_container {
     display: flex;
     justify-content: center;
+    position: relative;
+    z-index: 1;
   }
 
   .foot_container {
     display: flex;
     justify-content: right;
+    position: relative;
+    z-index: 1;
   }
 
   .head_image {
