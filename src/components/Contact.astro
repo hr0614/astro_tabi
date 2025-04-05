@@ -1,1 +1,36 @@
-<div>Contact</div>
+---
+import ContentsBase from "./background/ContentsBase.astro";
+---
+
+<ContentsBase>
+  <div class="contents-wrapper">contact</div>
+</ContentsBase>
+<div class="footer-wrapper">
+  Copyright ©2023 tabi:)
+  当サイトの内容、テキスト、画像等の無断転載・無断使用を固く禁じます。<br />
+  Unauthorized reproduction or use of the contents, text, images, etc. of this website
+  is strictly prohibited.
+</div>
+
+<style>
+  .contents-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .footer-wrapper {
+    height: 150px;
+    /* width: 30%; */
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    text-align: center;
+    padding-bottom: 50px;
+    font-size: 10px;
+    color: #1d2027;
+    opacity: 0.4;
+  }
+</style>

@@ -1,1 +1,17 @@
-<div>Profile</div>
+---
+import ContentsBase from "./background/ContentsBase.astro";
+---
+
+<ContentsBase noFootImage={true}>
+  <div class="contents-wrapper">profile</div>
+</ContentsBase>
+
+<style>
+  .contents-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>

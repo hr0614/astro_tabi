@@ -1,0 +1,28 @@
+---
+interface Props {
+  noFootImage?: boolean;
+}
+
+const { noFootImage = false } = Astro.props;
+---
+
+<div class:list={["contents-base", { "has-foot-image": noFootImage }]}>
+  <slot />
+</div>
+
+<style>
+  .contents-base {
+    width: 60%;
+    height: 60%;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .has-foot-image {
+    margin-bottom: 150px; /* footImageの高さに合わせて調整 */
+  }
+</style>
