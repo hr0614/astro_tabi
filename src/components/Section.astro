@@ -1,10 +1,17 @@
 ---
 import { Image } from "astro:assets";
-const { color, height, rounded = true, headImage, footImage } = Astro.props;
+const {
+  color,
+  height,
+  rounded = true,
+  headImage,
+  footImage,
+  isTop = false,
+} = Astro.props;
 // import TransitionLink from "../components/transitionOption/TransitionLink.astro";
 ---
 
-<div class:list={["area", { rounded: rounded }]}>
+<div class:list={["area", { rounded: rounded, "not-top": !isTop }]}>
   <slot name="background" />
   {
     headImage && (
@@ -38,6 +45,10 @@ const { color, height, rounded = true, headImage, footImage } = Astro.props;
     background-color: var(--color);
     scroll-snap-align: start;
     position: relative;
+  }
+
+  .not-top {
+    padding: 0 50px;
   }
 
   .rounded {

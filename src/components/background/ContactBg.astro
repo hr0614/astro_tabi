@@ -1,0 +1,33 @@
+---
+import { Image } from "astro:assets";
+import bg from "../../img/background/BgD.png";
+---
+
+<div class="background">
+  <Image src={bg} alt="" class="bg-img" />
+  <!-- <Image src={center} alt="" class="center-img" />
+  <Image src={bottom} alt="" class="bottom-img" /> -->
+</div>
+
+<style>
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .bg-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: 100vh;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.2;
+  }
+</style>
