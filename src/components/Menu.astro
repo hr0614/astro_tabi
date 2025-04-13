@@ -13,6 +13,9 @@ import accentBottom from "../img/menu/01.png";
       <li class="menu_title">Illust</li>
       <li class="menu_title">Work</li>
       <li class="menu_title">Contact</li>
+      <li class="menu_title">
+        Xfolio<i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </li>
     </ul>
     <Image src={accentTop} class="accent-top" alt="" />
     <Image src={accentBottom} class="accent-bottom" alt="" />
@@ -24,6 +27,13 @@ import accentBottom from "../img/menu/01.png";
 </div>
 
 <style>
+  .fa-arrow-up-right-from-square {
+    font-size: 15px;
+    margin-left: 5px;
+    position: relative;
+    bottom: 2px;
+    color: #ff896d;
+  }
   .menu_wrapper {
     display: flex;
     flex-direction: column;
@@ -79,7 +89,7 @@ import accentBottom from "../img/menu/01.png";
   }
   .accent-bottom {
     position: absolute;
-    bottom: -4px;
+    bottom: -20px;
     right: -75px;
     width: 10vw;
     min-width: 140px;

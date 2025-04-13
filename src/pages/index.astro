@@ -7,11 +7,9 @@ import Work from "../components/Work.astro";
 import Info from "../components/Info.astro";
 import Contact from "../components/Contact.astro";
 import Top from "../components/Top.astro";
-import IllustBg from "../components/background/IllustBg.astro";
-import InfoBg from "../components/background/InfoBg.astro";
 import ProfileBg from "../components/background/ProfileBg.astro";
-import WorkBg from "../components/background/WorkBg.astro";
 import ContactBg from "../components/background/ContactBg.astro";
+import BgTypeA from "../components/background/BgTypeA.astro";
 import illustHeadImage from "../img/HeadImage/Illust.png";
 import infoHeadImage from "../img/HeadImage/Info.png";
 import profileHeadImage from "../img/HeadImage/Profile.png";
@@ -22,14 +20,15 @@ import footImage from "../img/footImage/ViewMore_A.png";
 
 <Layout title="tabi:) Illustration">
   <div class="container">
-    <Section color="gray" rounded={false}><Top /></Section>
+    <Section color="gray" rounded={false} isTop={true}><Top /></Section>
     <Section
       color="#DADEDD"
       height="600px"
       headImage={illustHeadImage}
       footImage={footImage}
     >
-      <IllustBg slot="background" />
+      <!-- <IllustBg slot="background" /> -->
+      <ContactBg slot="background" />
       <Illust />
     </Section>
     <Section
@@ -38,7 +37,7 @@ import footImage from "../img/footImage/ViewMore_A.png";
       headImage={infoHeadImage}
       footImage={footImage}
     >
-      <InfoBg slot="background" />
+      <ProfileBg slot="background" />
       <Info />
     </Section>
 
@@ -48,7 +47,7 @@ import footImage from "../img/footImage/ViewMore_A.png";
       headImage={workHeadImage}
       footImage={footImage}
     >
-      <WorkBg slot="background" />
+      <ContactBg slot="background" />
       <Work />
     </Section>
 
@@ -69,5 +68,6 @@ import footImage from "../img/footImage/ViewMore_A.png";
     overflow: auto;
     scroll-snap-type: y mandatory;
     height: 100vh;
+    background-color: color= "#DADEDD";
   }
 </style>
