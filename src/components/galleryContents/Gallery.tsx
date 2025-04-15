@@ -35,7 +35,7 @@ export const Gallery = () => {
 
     const fetchItems = async () => {
       try {
-        const res = await fetch(`https://hari-test.microcms.io/api/v1/gallery?filters=category[contains]${category}`, {
+        const res = await fetch(`${import.meta.env.PUBLIC_MICROCMS_API_URL}gallery?filters=category[contains]${category}`, {
           headers: {
             "X-MICROCMS-API-KEY": import.meta.env.PUBLIC_MICROCMS_API_KEY || '',
           },

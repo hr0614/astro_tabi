@@ -1,10 +1,8 @@
 ---
 import { Image } from "astro:assets";
-import slide01 from "../img/illust/IMG_9926.jpg";
-import slide02 from "../img/illust/IMG_9927.jpg";
-import slide03 from "../img/illust/IMG_9928.jpg";
-import slide04 from "../img/illust/IMG_9935.jpg";
-import slide05 from "../img/illust/IMG_9938.jpg";
+import { getIllust } from "../library/microcms";
+const response = await getIllust({ filters: "pickup[equals]true" });
+// console.log(response);
 ---
 
 <div class="container">
@@ -12,15 +10,14 @@ import slide05 from "../img/illust/IMG_9938.jpg";
     <!-- Additional required wrapper -->
     <div class="swiper-wrapper">
       <!-- Slides -->
-      <div class="swiper-slide"><Image src={slide01} alt="" /></div>
-      <div class="swiper-slide"><Image src={slide02} alt="" /></div>
-      <div class="swiper-slide"><Image src={slide03} alt="" /></div>
-      <div class="swiper-slide"><Image src={slide04} alt="" /></div>
-      <div class="swiper-slide"><Image src={slide05} alt="" /></div>
+      {
+        response.contents.map((illust: any) => (
+          <div class="swiper-slide">
+            <img src={illust.image?.url} alt="" />
+          </div>
+        ))
+      }
     </div>
-
-    <!-- If we need scrollbar -->
-    <!-- <div class="swiper-scrollbar"></div> -->
   </div>
   <!-- If we need pagination -->
   <div class="swiper-pagination"></div>
@@ -49,10 +46,13 @@ import slide05 from "../img/illust/IMG_9938.jpg";
   }
 
   .swiper-slide img {
-    max-height: 400px;
+    max-height: 520px;
+    height: 50vh;
     border-radius: 20px;
     object-fit: cover;
     box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 280px;
   }
 
   .swiper-button::after {
