@@ -1,6 +1,6 @@
 ---
-import { Image } from "astro:assets";
 import { getIllust } from "../library/microcms";
+import IllustModal from "./modalComponent/IllustModal";
 const response = await getIllust({ filters: "pickup[equals]true" });
 // console.log(response);
 ---
@@ -13,7 +13,7 @@ const response = await getIllust({ filters: "pickup[equals]true" });
       {
         response.contents.map((illust: any) => (
           <div class="swiper-slide">
-            <img src={illust.image?.url} alt="" />
+            <IllustModal imageUrl={illust.image?.url} client:load />
           </div>
         ))
       }
