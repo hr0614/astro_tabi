@@ -1,10 +1,44 @@
 ---
 import ContentsBase from "./background/ContentsBase.astro";
+import FontAwesomeIcon from "../layouts/FontAwesomeIcon.astro";
+import { faSquareBluesky } from "@fortawesome/free-brands-svg-icons";
+import { faSquareXTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import ContactButton from "./ContactButton.astro";
 ---
 
 <ContentsBase>
-  <div class="contents-wrapper">contact</div>
+  <div class="contents-wrapper">
+    <div class="about-text">
+      現在、◯月以降のお仕事を承っております。<br />
+      お仕事の依頼をご検討中の方は、下記依頼ページの内容をご参照ください。<br />
+    </div>
+    <div class="request-link"><ContactButton /></div>
+    <div class="social-container">
+      <div class="address-wrapper">
+        <div class="header">Mail</div>
+        <div class="address">sample.adress@gmail.com</div>
+      </div>
+      <div class="social-link-wrapper">
+        <div class="header">SNS</div>
+        <div class="social-links">
+          <a class="social-link" href="/"
+            ><FontAwesomeIcon icon={faSquareXTwitter} /></a
+          >
+          <a class="social-link" href="/"
+            ><FontAwesomeIcon icon={faInstagram} /></a
+          >
+          <a class="social-link" href="/"
+            ><FontAwesomeIcon icon={faSquareBluesky} /></a
+          >
+        </div>
+      </div>
+
+      <!-- <a href="/"><i class="fa-brands fa-square-bluesky"></i></a> -->
+    </div>
+  </div>
 </ContentsBase>
+
 <div class="footer-wrapper">
   Copyright ©2023 tabi:)
   当サイトの内容、テキスト、画像等の無断転載・無断使用を固く禁じます。<br />
@@ -19,6 +53,7 @@ import ContentsBase from "./background/ContentsBase.astro";
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
   }
 
   .footer-wrapper {
@@ -32,5 +67,42 @@ import ContentsBase from "./background/ContentsBase.astro";
     font-size: 10px;
     color: #1d2027;
     opacity: 0.4;
+  }
+  .about-text {
+    width: 70%;
+    text-align: center;
+    margin: 40px 0 28px 0;
+    font-family: "M PLUS Rounded 1c";
+  }
+
+  .header {
+    width: 20%;
+    border-bottom: 2px dotted #000;
+    font-family: "Lexend Deca";
+    font-size: 20px;
+    letter-spacing: 2px;
+    /* display: inline-block; */
+  }
+  .social-container {
+    width: 70%;
+    margin-top: 40px;
+    color: #626262;
+  }
+
+  .address-wrapper {
+    margin-bottom: 12px;
+  }
+  .address {
+    font-family: "Lexend Deca";
+    font-size: 18px;
+  }
+  .social-link {
+    font-size: 40px;
+    color: #626262;
+  }
+
+  .social-link:hover {
+    opacity: 0.5;
+    color: #5fd3c6;
   }
 </style>

@@ -1,0 +1,63 @@
+<div class="button_line007">
+  <a href="#">ご依頼はこちら</a>
+</div>
+
+<style>
+  /* LINE007 */
+  .button_line007 a {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 220px;
+    padding: 10px 25px;
+    color: white;
+    transition: 0.3s ease-in-out;
+    font-weight: 600;
+    background: #5fd3c6;
+    text-decoration: none;
+    font-family: "Lexend Deca";
+  }
+  .button_line007 a:hover {
+    background: white;
+    color: #5fd3c6;
+  }
+  .button_line007 a:before,
+  .button_line007 a:after {
+    box-sizing: inherit;
+    content: "";
+    position: absolute;
+    border: 2px solid transparent;
+    width: 0;
+    height: 0;
+  }
+  .button_line007 a:before {
+    top: 0;
+    left: 0;
+  }
+  .button_line007 a:after {
+    bottom: 0;
+    right: 0;
+  }
+  .button_line007 a:hover:before,
+  .button_line007 a:hover:after {
+    width: 100%;
+    height: 100%;
+  }
+  .button_line007 a:hover:before {
+    border-top-color: #5fd3c6;
+    border-right-color: #5fd3c6;
+    transition:
+      width 0.15s ease-out,
+      height 0.15s ease-out 0.15s;
+  }
+  .button_line007 a:hover:after {
+    border-bottom-color: #5fd3c6;
+    border-left-color: #5fd3c6;
+    transition:
+      border-color 0s ease-out 0.2s,
+      width 0.15s ease-out 0.2s,
+      height 0.15s ease-out 0.3s;
+  }
+</style>
