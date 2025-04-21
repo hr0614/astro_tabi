@@ -1,3 +1,4 @@
+/* 基本テキスト */
 @font-face {
   font-family: 'M PLUS Rounded 1c';
   src: url('/fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf') format('truetype');
@@ -6,6 +7,7 @@
   font-display: swap;
 }
 
+/* 旧タイトルロゴ */
 @font-face {
   font-family: 'Oooh Baby';
   src: url('/fonts/Oooh_Baby/OoohBaby-Regular.ttf') format('truetype');
@@ -14,6 +16,7 @@
   font-display: swap;
 }
 
+/* シンプルゴシック体 */
 @font-face {
   font-family: 'Lexend Deca';
   src: url('/fonts/Lexend_Deca/LexendDeca-VariableFont_wght.ttf') format('truetype');
@@ -22,6 +25,7 @@
   font-display: swap;
 }
 
+/* メニューゴシック体 */
 @font-face {
   font-family: 'Rowdies Regular';
   src: url('/fonts/Rowdies/Rowdies-Regular.ttf') format('truetype');
@@ -30,9 +34,19 @@
   font-display: swap;
 }
 
+/* 新タイトルロゴ */
 @font-face {
   font-family: 'Playwrite NZ';
   src: url('/fonts/Playwrite_NZ/static/PlaywriteNZ-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* オシャレ系 */
+@font-face {
+  font-family: 'Cormorant';
+  src: url('/fonts/Cormorant/Cormorant-VariableFont_wght.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;

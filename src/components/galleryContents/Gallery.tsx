@@ -50,13 +50,16 @@ export const Gallery = () => {
     fetchItems();
   }, [category]); // categoryが変更されたときだけ実行
 
-
+  // 現在のカテゴリに基づいてリンクのスタイルを決定
+  const isOriginalActive = category === "Original";
+  const isWorkActive = category === "Work";
 
   return (
     <div className={s.wrapper}>
+      <a href="/" className={s.back_to_top}><i className="fa-solid fa-arrow-left"></i></a>
       <div className={s.header}>
-        <a href="/gallery" className={`${s.nav} ${s.original_button}`}>Original</a>
-        <a href="/gallery?category=Work" className={`${s.nav} ${s.work_button}`}>Work</a>
+        <a href="/gallery" className={`${s.nav} ${isOriginalActive ? s.active : ''}`}>Original</a>
+        <a href="/gallery?category=Work" className={`${s.nav} ${isWorkActive ? s.active : ''}`}>Work</a>
       </div>
       <div className={s.image_area}>
         <Masonry

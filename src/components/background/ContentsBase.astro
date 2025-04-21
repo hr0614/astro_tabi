@@ -23,6 +23,12 @@ const { noFootImage = false } = Astro.props;
     margin: 0 auto;
     z-index: 1;
   }
+  @media screen and (max-width: 839px) {
+    .contents-base {
+      width: 100%;
+      height: 60%;
+    }
+  }
 
   .has-foot-image {
     margin-bottom: 150px; /* footImageの高さに合わせて調整 */

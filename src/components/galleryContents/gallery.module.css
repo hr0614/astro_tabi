@@ -11,10 +11,56 @@
   display: flex;
   gap: 2rem;
   list-style: none;
-  padding: 20px 10px;
-  margin: 0;
+  margin: 20px 10px;
   text-decoration: none;
   font-family: "Lexend Deca", serif;
-  font-size: 40px;
+  font-size: 30px;
   color: gray;
+
+}
+
+.nav:hover {
+  transform: scale(1.03);
+}
+
+.active {
+  color: #ff896d;
+  /* オレンジ色 */
+  /* font-weight: bold; */
+}
+
+.image_area {
+  padding: 10px;
+}
+
+.gallery-item {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: scale(1.03);
+}
+
+.wrapper {
+  position: relative;
+}
+
+.back_to_top {
+  position: absolute;
+  top: 35px;
+  left: 50px;
+  display: flex;
+  align-items: center;
+  font-family: "Lexend Deca", serif;
+  font-size: 25px;
+  color: #b7b8b9;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.back_to_top:hover {
+  /* color: #5fd3c6; */
+  color: #1d2027;
+  transform: translateX(-5px);
 }

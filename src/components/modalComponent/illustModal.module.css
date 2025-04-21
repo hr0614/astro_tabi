@@ -1,0 +1,54 @@
+.illustContainer {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.illustContainer:hover {
+  transform: scale(1.03);
+}
+
+.thumbnailImage {
+  max-height: 520px;
+  height: 50vh;
+  border-radius: 20px;
+  object-fit: cover;
+  box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 280px;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.modalImage {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+.closeButton {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #333;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+  background-color: #555;
+  transform: scale(1.1);
+}

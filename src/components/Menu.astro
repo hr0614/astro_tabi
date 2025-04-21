@@ -2,6 +2,10 @@
 import { Image } from "astro:assets";
 import accentTop from "../img/menu/02.png";
 import accentBottom from "../img/menu/01.png";
+import FontAwesomeIcon from "../layouts/FontAwesomeIcon.astro";
+import { faSquareBluesky } from "@fortawesome/free-brands-svg-icons";
+import { faSquareXTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 ---
 
 <div class="menu_wrapper">
@@ -9,9 +13,9 @@ import accentBottom from "../img/menu/01.png";
   <div class="menu_list">
     <ul>
       <li class="menu_title">Info</li>
-      <li class="menu_title">Profile</li>
       <li class="menu_title">Illust</li>
       <li class="menu_title">Work</li>
+      <li class="menu_title">Profile</li>
       <li class="menu_title">Contact</li>
       <li class="menu_title">
         Xfolio<i class="fa-solid fa-arrow-up-right-from-square"></i>
@@ -20,9 +24,20 @@ import accentBottom from "../img/menu/01.png";
     <Image src={accentTop} class="accent-top" alt="" />
     <Image src={accentBottom} class="accent-bottom" alt="" />
   </div>
-  <div class="social_items">
-    <i class="fa-brands fa-instagram social_icon"></i>
-    <i class="fa-brands fa-x-twitter social_icon"></i>
+  <div class="social-items">
+    <a class="social-icon" href="https://x.com/tabi_0v0" target="_blank"
+      ><FontAwesomeIcon icon={faSquareXTwitter} /></a
+    >
+    <a
+      class="social-icon"
+      href="https://www.instagram.com/tabi_0v0/"
+      target="_blank"><FontAwesomeIcon icon={faInstagram} /></a
+    >
+    <a
+      class="social-icon"
+      href="https://bsky.app/profile/tabi-0v0.bsky.social"
+      target="_blank"><FontAwesomeIcon icon={faSquareBluesky} /></a
+    >
   </div>
 </div>
 
@@ -96,15 +111,12 @@ import accentBottom from "../img/menu/01.png";
     height: auto;
   }
 
-  .social_items {
-    margin-top: 16px;
-  }
-  .social_icon {
+  .social-icon {
     font-size: 40px;
     color: #5fd3c6;
   }
 
-  .social_icon:hover {
+  .social-icon:hover {
     opacity: 0.5;
   }
 </style>
