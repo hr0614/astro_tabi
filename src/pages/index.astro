@@ -19,17 +19,10 @@ import footImage from "../img/footImage/ViewMore_A.png";
 
 <Layout title="tabi:) Illustration">
   <div class="container">
+    <!-- TOPページ -->
     <Section color="gray" rounded={false} isTop={true}><Top /></Section>
-    <Section
-      color="#DADEDD"
-      height="600px"
-      headImage={illustHeadImage}
-      footImage={footImage}
-    >
-      <!-- <IllustBg slot="background" /> -->
-      <ContactBg slot="background" />
-      <Illust />
-    </Section>
+
+    <!-- Infoセクション -->
     <Section
       color="#DADEDD"
       height="600px"
@@ -40,6 +33,18 @@ import footImage from "../img/footImage/ViewMore_A.png";
       <Info />
     </Section>
 
+    <!-- Illustセクション -->
+    <Section
+      color="#DADEDD"
+      height="600px"
+      headImage={illustHeadImage}
+      footImage={footImage}
+    >
+      <ContactBg slot="background" />
+      <Illust />
+    </Section>
+
+    <!-- Workセクション -->
     <Section
       color="#DADEDD"
       height="600px"
@@ -50,11 +55,12 @@ import footImage from "../img/footImage/ViewMore_A.png";
       <Work />
     </Section>
 
+    <!-- Profileセクション -->
     <Section color="#DADEDD" height="600px" headImage={profileHeadImage}>
       <ProfileBg slot="background" />
       <Profile />
     </Section>
-
+    <!-- Contactセクション -->
     <Section color="#DADEDD" height="600px" headImage={contactHeadImage}>
       <ContactBg slot="background" />
       <Contact />

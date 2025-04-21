@@ -1,9 +1,31 @@
 ---
+import { isTemplateLiteralToken } from "typescript";
+import { getArticles } from "../library/microcms";
 import ContentsBase from "./background/ContentsBase.astro";
+const response = await getArticles({ filters: "category[contains]お仕事" });
+console.log("hoge", response.contents);
+import dayjs from "dayjs";
+import "dayjs/locale/ja";
+dayjs.locale("ja");
+// 日付フォーマット関数
+const formatDate = (dateString) => {
+  return dayjs(dateString).format("YYYY/MM");
+};
 ---
 
 <ContentsBase>
-  <div class="contents-wrapper">work</div>
+  <div class="contents-wrapper">
+    <ul class="work-list">
+      {
+        response.contents.map((content: any) => (
+          <li class="list-item">
+            <div class="date">{formatDate(content.publishedAt)}</div>
+            <div class="title">{content.title}</div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </ContentsBase>
 
 <style>
@@ -13,5 +35,22 @@ import ContentsBase from "./background/ContentsBase.astro";
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .work-list {
+    width: 85%;
+    margin: 20px 0;
+  }
+  .list-item {
+    display: flex;
+    font-size: 14px;
+    margin-bottom: 12px;
+    border-bottom: 1px dotted #1d2027;
+    font-family: "M PLUS Rounded 1c";
+  }
+
+  .date {
+    margin-right: 15px;
+    font-size: 13px;
+    font-family: "Lexend Deca";
   }
 </style>
