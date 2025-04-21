@@ -1,1 +1,18 @@
-<div>Information</div>
+---
+import Header from "../../UIcontent/header/Header.astro";
+import Layout from "../../../layouts/Layout.astro";
+---
+
+<Layout title="Works">
+  <div class="content-wrapper">
+    <Header title="Information" />
+    <div>Information</div>
+  </div>
+</Layout>
+
+<style>
+  .content-wrapper {
+    height: 100vh;
+    background-color: #dadedd;
+  }
+</style>
