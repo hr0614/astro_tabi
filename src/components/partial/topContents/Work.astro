@@ -1,14 +1,14 @@
 ---
 import { isTemplateLiteralToken } from "typescript";
-import { getArticles } from "../library/microcms";
-import ContentsBase from "./background/ContentsBase.astro";
+import { getArticles } from "../../../library/microcms";
+import ContentsBase from "../../UIcontent/background/ContentsBase.astro";
 const response = await getArticles({ filters: "category[contains]お仕事" });
 console.log("hoge", response.contents);
 import dayjs from "dayjs";
 import "dayjs/locale/ja";
 dayjs.locale("ja");
 // 日付フォーマット関数
-const formatDate = (dateString) => {
+const formatDate = (dateString: string) => {
   return dayjs(dateString).format("YYYY/MM");
 };
 ---

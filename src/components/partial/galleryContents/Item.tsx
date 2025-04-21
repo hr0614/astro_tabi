@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from "framer-motion";
-import IllustModal from '../modalComponent/IllustModal';
+import IllustModal from '../../UIcontent/modalComponent/IllustModal';
 import s from '../galleryContents/gallery.module.css'
 
 type Props = {

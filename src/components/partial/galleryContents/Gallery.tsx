@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import s from '../galleryContents/gallery.module.css'
 import Masonry from 'react-layout-masonry';
-import Item from '../galleryContents/Item';
+import Item from './Item';
 import { div } from 'framer-motion/client';
 
 type Item = {

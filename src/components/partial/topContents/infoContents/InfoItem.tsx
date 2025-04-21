@@ -1,5 +1,5 @@
 import s from "../infoContents/infoItem.module.css"
-import infosample from "../../img/info/noimage.jpg"
+import infosample from "../../../../img/info/noimage.jpg"
 import dayjs from 'dayjs';
 import { motion } from "framer-motion";
 
