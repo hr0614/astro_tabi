@@ -27,6 +27,35 @@ const dataCategory = category; // data-category属性用
     console.log("現在のカテゴリー:", currentCategory);
     console.log("現在のURL:", window.location.href);
 
+    // カテゴリーボタンクリック時にページをリセットする処理を追加
+    categoryBtns.forEach((btn) => {
+      btn.addEventListener("click", (event) => {
+        // 元のhref属性を取得
+        const originalHref = btn.getAttribute("href");
+        if (!originalHref) return;
+
+        // 新しいURLを構築
+        const url = new URL(originalHref, window.location.origin);
+
+        // カテゴリーを設定し、ページをリセット
+        // クリックしたボタンがALLカテゴリーなら、カテゴリークエリを削除
+        const category = btn.getAttribute("data-category");
+        if (category !== "ALL") {
+          url.searchParams.set("category", category || "");
+        } else {
+          url.searchParams.delete("category");
+        }
+
+        // ページパラメータを削除（ページ1に戻す）
+        url.searchParams.delete("page");
+
+        // 新しいURLに遷移
+        event.preventDefault();
+        window.history.pushState({}, "", url.toString());
+        window.location.href = url.toString();
+      });
+    });
+
     // 現在のカテゴリーに基づいてアクティブクラスを設定
     categoryBtns.forEach((btn) => {
       const btnCategory = btn.getAttribute("data-category");

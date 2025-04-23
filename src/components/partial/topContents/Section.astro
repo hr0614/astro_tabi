@@ -6,6 +6,7 @@ const {
   rounded = true,
   headImage,
   footImage,
+  link,
   isTop = false,
 } = Astro.props;
 // import TransitionLink from "../components/transitionOption/TransitionLink.astro";
@@ -30,7 +31,7 @@ const {
           <Image class="foot_image" src={footImage} alt="" />
         </TransitionLink> */}
 
-        <a href="/gallery">
+        <a href={link}>
           <Image class="foot_image" src={footImage} alt="" />
         </a>
       </div>

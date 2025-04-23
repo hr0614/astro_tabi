@@ -7,46 +7,78 @@ import "dayjs/locale/ja";
 
 // 記事データの取得
 export async function getStaticPaths() {
-  const response = await getArticles();
+  try {
+    const response = await getArticles({ limit: 100 });
 
-  return response.contents.map((content) => ({
-    params: { blogId: content.id },
-    props: { content },
-  }));
+    return response.contents.map((content) => ({
+      params: { blogId: content.id },
+      props: { content },
+    }));
+  } catch (error) {
+    console.error("Error fetching articles:", error);
+    return [];
+  }
 }
 
+// 404ページへのフォールバック
 const { content } = Astro.props;
-const formattedDate = dayjs(content.publishedAt).format("YYYY.MM.DD");
+const formattedDate = content
+  ? dayjs(content.publishedAt).format("YYYY.MM.DD")
+  : "";
 ---
 
-<Layout title={content.title}>
+<Layout title={content?.title || "記事が見つかりません"}>
   <div class="content-wrapper">
     <Header title="Information" />
-    <div class="article-container">
-      <div class="article-header">
-        <div class="category-badge" data-category={content.category[0]}>
-          {content.category[0]}
-        </div>
-        <div class="date">{formattedDate}</div>
-        <h1 class="title">{content.title}</h1>
-      </div>
-
-      {
-        content.thumbnail && (
-          <div class="thumbnail">
-            <img src={content.thumbnail.url} alt={content.title} />
+    {
+      content ? (
+        <div class="article-container">
+          <div class="article-header">
+            <div class="date">{formattedDate}</div>
+            <div class="category-badge" data-category={content.category[0]}>
+              {content.category[0]}
+            </div>
+            <h1 class="title">{content.title}</h1>
           </div>
-        )
-      }
 
-      <div class="article-body" set:html={content.content} />
+          {/* {content.thumbnail && (
+            <div class="thumbnail">
+              <img src={content.thumbnail.url} alt={content.title} />
+            </div>
+          )} */}
 
-      <div class="back-link">
-        <a href="/info">記事一覧に戻る</a>
-      </div>
-    </div>
+          <div class="article-body" set:html={content.content} />
+
+          <div class="back-link">
+            <a href="/info">記事一覧に戻る</a>
+          </div>
+        </div>
+      ) : (
+        <div class="error-container">
+          <h2>記事が見つかりませんでした</h2>
+          <p>お探しの記事は存在しないか、削除された可能性があります。</p>
+          <div class="back-link">
+            <a href="/info">記事一覧に戻る</a>
+          </div>
+        </div>
+      )
+    }
   </div>
 </Layout>
+
+<style is:global>
+  .article-body {
+    font-family: "M PLUS Rounded 1c";
+    line-height: 1.7;
+    color: #333;
+  }
+
+  /* 記事本文内の画像スタイル */
+  .article-body img {
+    width: 70%;
+    height: auto;
+  }
+</style>
 
 <style>
   .content-wrapper {
@@ -54,7 +86,8 @@ const formattedDate = dayjs(content.publishedAt).format("YYYY.MM.DD");
     background-color: #dadedd;
   }
 
-  .article-container {
+  .article-container,
+  .error-container {
     width: 80%;
     max-width: 800px;
     margin: 40px auto;
@@ -62,6 +95,22 @@ const formattedDate = dayjs(content.publishedAt).format("YYYY.MM.DD");
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .error-container {
+    text-align: center;
+    padding: 60px 30px;
+  }
+
+  .error-container h2 {
+    font-family: "M PLUS Rounded 1c";
+    color: #555;
+    margin-bottom: 20px;
+  }
+
+  .error-container p {
+    color: #777;
+    margin-bottom: 30px;
   }
 
   .article-header {
@@ -79,15 +128,15 @@ const formattedDate = dayjs(content.publishedAt).format("YYYY.MM.DD");
   }
 
   .category-badge[data-category="お知らせ"] {
-    background-color: #5fd3c6;
+    background-color: #f4b4a5;
   }
 
   .category-badge[data-category="お仕事"] {
-    background-color: #ff896d;
+    background-color: #a4e1ea;
   }
 
   .category-badge[data-category="イベント"] {
-    background-color: #ffcc5f;
+    background-color: #c3dd9e;
   }
 
   .date {
@@ -114,12 +163,6 @@ const formattedDate = dayjs(content.publishedAt).format("YYYY.MM.DD");
     object-fit: cover;
   }
 
-  .article-body {
-    font-family: "M PLUS Rounded 1c";
-    line-height: 1.7;
-    color: #333;
-  }
-
   .back-link {
     margin-top: 40px;
     text-align: center;
@@ -139,5 +182,11 @@ const formattedDate = dayjs(content.publishedAt).format("YYYY.MM.DD");
   .back-link a:hover {
     background-color: #5fd3c6;
     color: #fff;
+  }
+
+  .article-body img {
+    max-width: 70%;
+    height: auto;
+    display: block;
   }
 </style>
