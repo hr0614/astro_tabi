@@ -5,6 +5,9 @@ import { getArticles } from "../../library/microcms";
 import dayjs from "dayjs";
 import "dayjs/locale/ja";
 
+// SSRモードで動的ルートを有効にする
+export const prerender = false;
+
 // 記事データの取得
 export async function getStaticPaths() {
   try {
@@ -20,8 +23,22 @@ export async function getStaticPaths() {
   }
 }
 
-// 404ページへのフォールバック
-const { content } = Astro.props;
+const { blogId } = Astro.params;
+let content;
+let error;
+
+try {
+  if (blogId) {
+    // 個別記事を取得
+    const response = await getArticles({ filters: `id[equals]${blogId}` });
+    content = response.contents[0] || null;
+  }
+} catch (e) {
+  console.error("Error fetching article:", e);
+  error = e;
+}
+
+// フォーマット
 const formattedDate = content
   ? dayjs(content.publishedAt).format("YYYY.MM.DD")
   : "";
@@ -84,6 +101,7 @@ const formattedDate = content
   .content-wrapper {
     min-height: 100vh;
     background-color: #dadedd;
+    padding: 20px 0;
   }
 
   .article-container,
