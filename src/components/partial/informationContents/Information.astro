@@ -1,18 +1,45 @@
 ---
 import Header from "../../UIcontent/header/Header.astro";
 import Layout from "../../../layouts/Layout.astro";
+import CategoryButton from "./CategoryButton.astro";
+import { ArticleList } from "./ArticleList";
+
+// 現在のURLクエリパラメータを取得
+const url = Astro.url;
+const searchParams = url.searchParams;
+const currentCategory = searchParams.get("category");
 ---
 
-<Layout title="Works">
+<Layout title="Information">
   <div class="content-wrapper">
     <Header title="Information" />
-    <div>Information</div>
+    <div class="category-area">
+      <CategoryButton category="ALL" />
+      <CategoryButton category="お知らせ" />
+      <CategoryButton category="お仕事" />
+      <CategoryButton category="イベント" />
+    </div>
+    <div class="article-area" data-category={currentCategory || "all"}>
+      <ArticleList client:load />
+    </div>
   </div>
 </Layout>
 
 <style>
   .content-wrapper {
-    height: 100vh;
+    min-height: 100vh;
     background-color: #dadedd;
+  }
+
+  .category-area {
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    gap: 15px;
+    margin: 0 auto;
+  }
+
+  .article-area {
+    margin-top: 20px;
   }
 </style>

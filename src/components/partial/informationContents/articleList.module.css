@@ -1,0 +1,49 @@
+.container {
+  width: 100%;
+  padding: 15px 0;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-family: "M PLUS Rounded 1c";
+  color: #626262;
+}
+
+.articleList {
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  list-style-type: none;
+  padding: 0;
+}
+
+.articleItem {
+  margin-bottom: 15px;
+  /* padding-bottom: 20px; */
+}
+
+.articleItem:last-child {
+  border-bottom: none;
+}
+
+.articleLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.articleLink:hover {
+  transform: translateY(-5px);
+}
+
+.noResults {
+  text-align: center;
+  padding: 40px 0;
+  font-family: "M PLUS Rounded 1c";
+  color: #626262;
+  font-size: 16px;
+}

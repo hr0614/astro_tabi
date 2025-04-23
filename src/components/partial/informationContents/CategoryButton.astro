@@ -1,0 +1,80 @@
+---
+interface Props {
+  category: string;
+}
+
+const { category } = Astro.props;
+const queryParam = category === "ALL" ? "" : `?category=${category}`;
+const dataCategory = category; // data-category属性用
+---
+
+<a
+  class="category-btn"
+  href={`/info${queryParam}`}
+  data-category={dataCategory}
+  onclick="console.log('クリックされたカテゴリー:', '${category}', '遷移先:', '/info${queryParam}')"
+  >{category}</a
+>
+
+<script>
+  // カテゴリーボタンのクリックイベントをリッスン
+  document.addEventListener("astro:page-load", () => {
+    const categoryBtns = document.querySelectorAll(".category-btn");
+    const currentCategory = new URLSearchParams(window.location.search).get(
+      "category",
+    );
+
+    console.log("現在のカテゴリー:", currentCategory);
+    console.log("現在のURL:", window.location.href);
+
+    // 現在のカテゴリーに基づいてアクティブクラスを設定
+    categoryBtns.forEach((btn) => {
+      const btnCategory = btn.getAttribute("data-category");
+      console.log(
+        "ボタンカテゴリー:",
+        btnCategory,
+        "現在のカテゴリー:",
+        currentCategory,
+        "一致:",
+        (currentCategory === null && btnCategory === "ALL") ||
+          currentCategory === btnCategory,
+      );
+
+      if (
+        (currentCategory === null && btnCategory === "ALL") ||
+        currentCategory === btnCategory
+      ) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
+  });
+</script>
+
+<style>
+  .category-btn {
+    font-family: "M PLUS Rounded 1c";
+    font-weight: bold;
+    background-color: #f5f5f5;
+    border-radius: 25px;
+    width: 100px;
+    text-align: center;
+    font-size: 13px;
+    color: #aaaaaa;
+    display: block;
+    padding: 8px 0;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .category-btn:hover {
+    background-color: #5fd3c6;
+    color: white;
+  }
+
+  .category-btn.active {
+    background-color: #5fd3c6;
+    color: white;
+  }
+</style>

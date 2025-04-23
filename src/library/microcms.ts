@@ -23,15 +23,15 @@ export const getIllust = async (queries?: MicroCMSQueries) => {
 };
 
 //InfoAPI
-type Article = {
+export type Article = {
   title: string,
   thumbnail?: {
     url: string
   },
-  publishedAt: string,
+  content?: string,
   category: string[],
-}
+} & MicroCMSListContent;
 
 export const getArticles = async (queries?: MicroCMSQueries) => {
-  return await client.getList<Article[]>({ endpoint: "info", queries });
+  return await client.getList<Article>({ endpoint: "info", queries });
 };
