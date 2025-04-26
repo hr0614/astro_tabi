@@ -17,7 +17,6 @@ type Article = {
 export const ArticleList = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState<string | null>(null);
   const [initialized, setInitialized] = useState(false);
 
   // ページネーション用
@@ -27,15 +26,11 @@ export const ArticleList = () => {
 
   // コンポーネントマウント時に一度だけURLパラメータを取得
   useEffect(() => {
-    // URLからクエリパラメータを取得
+    // URLからページパラメータのみを取得
     const params = new URLSearchParams(window.location.search);
-    const categoryParam = params.get('category');
     const pageParam = params.get('page');
 
-    console.log("初期カテゴリーパラメータ:", categoryParam);
     console.log("初期ページパラメータ:", pageParam);
-
-    setCategory(categoryParam);
     setCurrentPage(pageParam ? parseInt(pageParam) : 1);
     setInitialized(true);
 
@@ -43,13 +38,9 @@ export const ArticleList = () => {
     // popstateイベントをリッスン
     const handlePopState = () => {
       const newParams = new URLSearchParams(window.location.search);
-      const newCategoryParam = newParams.get('category');
       const newPageParam = newParams.get('page');
 
-      console.log("popstate後のカテゴリーパラメータ:", newCategoryParam);
       console.log("popstate後のページパラメータ:", newPageParam);
-
-      setCategory(newCategoryParam);
       setCurrentPage(newPageParam ? parseInt(newPageParam) : 1);
     };
 
@@ -66,7 +57,7 @@ export const ArticleList = () => {
     // 初期化前は何もしない
     if (!initialized) return;
 
-    console.log("フェッチ開始、現在のカテゴリー:", category, "現在のページ:", currentPage);
+    console.log("フェッチ開始、現在のページ:", currentPage);
 
     const fetchArticles = async () => {
       setLoading(true);
@@ -75,11 +66,6 @@ export const ArticleList = () => {
         // エンドポイント構築
         let endpoint = "https://hari-test.microcms.io/api/v1/info";
         const queryParams = [];
-
-        // カテゴリーフィルター適用
-        if (category && category.trim() !== "") {
-          queryParams.push(`filters=category[contains]${category}`);
-        }
 
         // ページネーション情報を追加
         queryParams.push(`limit=${articlesPerPage}`);
@@ -122,7 +108,7 @@ export const ArticleList = () => {
     };
 
     fetchArticles();
-  }, [category, currentPage, initialized]); // カテゴリーまたはページが変更されたときに実行
+  }, [currentPage, initialized]); // ページが変更されたときのみ実行
 
   // ページ変更ハンドラー
   const handlePageChange = (page: number) => {
@@ -255,37 +241,35 @@ export const ArticleList = () => {
     <div className={s.container}>
       {loading ? (
         <div className={s.loading}>読み込み中...</div>
+      ) : articles.length === 0 ? (
+        <div className={s.noResults}>記事が見つかりませんでした</div>
       ) : (
         <>
-          <AnimatePresence mode="wait">
+          <AnimatePresence>
             <motion.ul
-              key={`${category || 'all'}-page-${currentPage}`} // カテゴリーまたはページ変更時に完全に再レンダリング
               className={s.articleList}
               variants={container}
               initial="hidden"
               animate="show"
             >
-              {articles && articles.length > 0 ? (
-                articles.map((article, index) => (
-                  <motion.li key={article.id} className={s.articleItem} variants={item}>
-                    <a href={`/info/${article.id}`} className={s.articleLink}>
-                      <InfoItem
-                        title={article.title}
-                        imageUrl={article.thumbnail?.url}
-                        date={article.publishedAt}
-                        category={article.category[0]}
-                        excerpt={createExcerpt(article.content)}
-                      />
-                    </a>
-                  </motion.li>
-                ))
-              ) : (
-                <div className={s.noResults}>該当する記事が見つかりませんでした</div>
-              )}
+              {articles.map((article) => (
+                <motion.li key={article.id} className={s.articleItem} variants={item}>
+                  <a href={`/info/${article.id}`} className={s.articleLink}>
+                    <InfoItem
+                      title={article.title}
+                      date={article.publishedAt}
+                      category={article.category[0]}
+                      excerpt={createExcerpt(article.content)}
+                      imageUrl={article.thumbnail?.url}
+                    />
+                  </a>
+                </motion.li>
+              ))}
             </motion.ul>
           </AnimatePresence>
 
-          {articles.length > 0 && totalPages > 1 && <Pagination />}
+          {/* ページネーション */}
+          {totalPages > 1 && <Pagination />}
         </>
       )}
     </div>

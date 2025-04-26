@@ -35,3 +35,13 @@ export type Article = {
 export const getArticles = async (queries?: MicroCMSQueries) => {
   return await client.getList<Article>({ endpoint: "info", queries });
 };
+
+export type WorkList = {
+  title: string,
+  link: string,
+  date: Date,
+} & MicroCMSListContent;
+
+export const getWorkList = async (queries?: MicroCMSQueries) => {
+  return await client.getList<WorkList>({ endpoint: "worklist", queries });
+};

@@ -1,0 +1,298 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../UIcontent/header/Header.astro";
+import FontAwesomeIcon from "../../../layouts/FontAwesomeIcon.astro";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
+---
+
+<Layout title="Contact">
+  <div class="contents-wrapper">
+    <Header title="Contact" />
+    <div class="text-area">
+      <div>
+        <h1>依頼をご検討中の方へ</h1>
+        <p>
+          イラストの依頼をご検討いただき、ありがとうございます!<br />
+          当ページに記載の内容を必ずご確認の上、下記メールアドレスまでご連絡ください。<br
+          />
+        </p>
+      </div>
+      <div class="mail-container">
+        <div id="mail-text" class="mail">tabi.illustwork@gmail.com</div>
+        <div id="mail-btn" class="copy-btn mail-copy-btn">
+          <FontAwesomeIcon icon={faCopy} />
+        </div>
+        <div id="mail-copy-message" class="copy-message">コピーしました！</div>
+      </div>
+      <div class="attention-text">
+        <p>
+          ・原則3日以内の返信を心がけておりますが、状況によっては少しお時間をいただく場合があります。<br
+          />
+          ・メールの内容によっては、返信を致しかねる場合がございます。(情報が著しく不足している、当ページをお読みになっていないと判断できるもの等)<br
+          />
+          ・一週間以上ご返信をいただけない場合はキャンセルとさせていただくことがございます。(お時間がかかる場合は、事前にお知らせいただけますと幸いです)<br
+          />
+        </p>
+      </div>
+      <div>
+        <h4>〼お仕事再開にあたって</h4>
+        <p>
+          私事で大変恐縮ではありますが、現在育児中のためお引き受けできる依頼数が時期により変動する場合がございます。<br
+          />
+          まずはメールにてご相談いただけますと幸いです!<br />
+        </p>
+      </div>
+      <div>
+        <h4>〼現在お断りしているご依頼<br /></h4>
+        <p>
+          ・個人様のご依頼(活動者様を除く)<br />
+          ・短納期のご依頼(1カ月以内)<br />
+          ・成人向けのご依頼 (活動内容に成人向け・センシティブ表現が含まれている場合もお断りさせていただいております)<br
+          />
+          ・実績公開不可のお仕事(イラストの一部のみ公開可能などの指定は可能です。別途ご相談ください)<br
+          />
+        </p>
+      </div>
+      <div>
+        <h4>〼ご依頼の際にご記載いただきたい事項<br /></h4>
+        <div class="template-txt">
+          <p id="txt">
+            ●ご依頼者様について<br />
+            ・お名前<br />
+            ・活動アカウント<br />
+            ●制作内容について<br />
+            ・ご依頼内容<br />
+            ・ご使用用途（商用利用の有無等）<br />
+            ・内容の詳細<br />
+            (サイズ/解像度/納品形式/レイヤー差分/背景の有無/描画範囲/ご衣装の新規デザインの有無)<br
+            />
+            ・制作のイメージ (雰囲気や表情/ポーズ/描いて欲しい小物などのご希望)<br
+            />
+            ・ご希望の納期<br />
+            ・ご予算<br />
+            ・著作権譲渡の有無<br />
+            ・その他<br />
+            ※描画資料などがございましたら添付してお送りください。<br />
+          </p>
+          <div id="template-btn" class="copy-btn">
+            <FontAwesomeIcon icon={faCopy} />
+          </div>
+          <div id="template-copy-message" class="copy-message">
+            コピーしました！
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .contents-wrapper {
+      background-color: #dadedd;
+      min-height: 100vh;
+      padding: 20px 0;
+    }
+    .text-area {
+      width: 70%;
+      max-width: 800px;
+      background-color: #f5f5f5;
+      padding: 40px;
+      border-radius: 10px;
+      margin: 0 auto;
+      font-size: 16px;
+      font-family: "M PLUS Rounded 1c";
+      color: #1d2027;
+    }
+
+    .text-area h4 {
+      color: #6ab7b1;
+    }
+
+    .mail-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      margin: 20px auto;
+      padding: 10px;
+      width: fit-content;
+    }
+
+    .mail {
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: #626262;
+      margin-right: 10px;
+    }
+
+    .mail-copy-btn {
+      position: relative;
+      bottom: 0;
+      margin-left: 8px;
+    }
+
+    .text-area h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .text-area div {
+      margin-bottom: 20px;
+    }
+    .template-txt {
+      border: 1px dotted Black;
+      max-width: 500px;
+      padding: 10px;
+      font-size: 15px;
+      position: relative;
+    }
+    .attention-text {
+      color: rgb(207, 33, 33);
+      font-size: 13px;
+    }
+
+    .attention-text h3 {
+      font-size: 18px;
+    }
+
+    h4 {
+      font-size: 17px;
+    }
+
+    .copy-btn {
+      color: #aaaaaa;
+      cursor: pointer;
+      font-size: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .template-txt .copy-btn {
+      position: absolute;
+      bottom: 5px;
+      right: 10px;
+      margin-bottom: 0px !important;
+    }
+
+    .copy-btn:hover {
+      opacity: 0.8;
+      color: #5fd3c6;
+    }
+
+    .copy-message {
+      position: absolute;
+      color: #5fd3c6;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 0.5s;
+      font-size: 10px;
+    }
+
+    .template-txt .copy-message {
+      bottom: 30px;
+      right: 5px;
+    }
+
+    .mail-container .copy-message {
+      bottom: 35px;
+      right: 0;
+    }
+  </style>
+
+  <script>
+    // テキストをクリップボードにコピーする汎用関数
+    function copyTextToClipboard(text: string, messageEl: HTMLElement | null) {
+      console.log("Copying text to clipboard:", text);
+
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          console.log("Text copied to clipboard");
+          if (messageEl) {
+            messageEl.style.opacity = "1";
+
+            // 3秒後にメッセージを非表示
+            setTimeout(() => {
+              messageEl.style.opacity = "0";
+            }, 3000);
+          }
+        })
+        .catch((err) => {
+          console.error("クリップボードへのコピーに失敗しました:", err);
+          alert("クリップボードへのコピーに失敗しました。");
+        });
+    }
+
+    // コピーボタンの初期化関数
+    function initCopyButtons() {
+      console.log("Initializing copy buttons...");
+
+      // テンプレート用コピーボタン
+      const templateBtn = document.getElementById("template-btn");
+      const templateTxt = document.getElementById("txt");
+      const templateCopyMessage = document.getElementById(
+        "template-copy-message",
+      );
+
+      // メールアドレス用コピーボタン
+      const mailBtn = document.getElementById("mail-btn");
+      const mailText = document.getElementById("mail-text");
+      const mailCopyMessage = document.getElementById("mail-copy-message");
+
+      // テンプレートのコピーボタン設定
+      if (templateBtn && templateTxt && templateCopyMessage) {
+        console.log("Template copy button elements found");
+
+        // 既存のイベントリスナーを削除（重複防止）
+        templateBtn.removeEventListener("click", handleTemplateCopy);
+
+        // 新しいイベントリスナーを追加
+        templateBtn.addEventListener("click", handleTemplateCopy);
+
+        // テンプレートコピー処理
+        function handleTemplateCopy() {
+          console.log("Template copy button clicked");
+          const textContent =
+            templateTxt?.innerText || templateTxt?.textContent || "";
+          copyTextToClipboard(textContent, templateCopyMessage);
+        }
+      } else {
+        console.warn("Template copy button elements not found");
+      }
+
+      // メールアドレスのコピーボタン設定
+      if (mailBtn && mailText && mailCopyMessage) {
+        console.log("Mail copy button elements found");
+
+        // 既存のイベントリスナーを削除（重複防止）
+        mailBtn.removeEventListener("click", handleMailCopy);
+
+        // 新しいイベントリスナーを追加
+        mailBtn.addEventListener("click", handleMailCopy);
+
+        // メールコピー処理
+        function handleMailCopy() {
+          console.log("Mail copy button clicked");
+          const textContent =
+            mailText?.innerText || mailText?.textContent || "";
+          copyTextToClipboard(textContent, mailCopyMessage);
+        }
+      } else {
+        console.warn("Mail copy button elements not found");
+      }
+    }
+
+    // 通常のページ読み込み時
+    document.addEventListener("DOMContentLoaded", initCopyButtons);
+
+    // Astroのビュートランジション後
+    document.addEventListener("astro:page-load", initCopyButtons);
+
+    // Astroのページスワップ後も実行（確実に初期化するため）
+    document.addEventListener("astro:after-swap", () => {
+      console.log("Page content swapped, reinitializing copy buttons");
+      // 少し遅延させて実行（DOMの更新を待つ）
+      setTimeout(initCopyButtons, 100);
+    });
+  </script>
+</Layout>

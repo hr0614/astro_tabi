@@ -1,7 +1,6 @@
 ---
 import Header from "../../UIcontent/header/Header.astro";
 import Layout from "../../../layouts/Layout.astro";
-import CategoryButton from "./CategoryButton.astro";
 import { ArticleList } from "./ArticleList";
 
 // 現在のURLクエリパラメータを取得
@@ -13,13 +12,7 @@ const currentCategory = searchParams.get("category");
 <Layout title="Information">
   <div class="content-wrapper">
     <Header title="Information" />
-    <div class="category-area">
-      <CategoryButton category="ALL" />
-      <CategoryButton category="お知らせ" />
-      <CategoryButton category="お仕事" />
-      <CategoryButton category="イベント" />
-    </div>
-    <div class="article-area" data-category={currentCategory || "all"}>
+    <div class="article-area">
       <ArticleList client:load />
     </div>
   </div>
@@ -29,14 +22,6 @@ const currentCategory = searchParams.get("category");
   .content-wrapper {
     min-height: 100vh;
     background-color: #dadedd;
-  }
-
-  .category-area {
-    display: flex;
-    justify-content: center;
-    width: 60%;
-    gap: 15px;
-    margin: 0 auto;
   }
 
   .article-area {

@@ -28,34 +28,89 @@ const { title, defaultTransition = "fade" } = Astro.props;
 		/>
 
 		<script>
-			// 最も確実なブラウザバック検出方法
+			// 各ページで一度だけ実行される初期化スクリプト
 			document.addEventListener(
 				"astro:page-load",
 				() => {
 					// 現在のURLを保存
 					let currentPath = window.location.pathname;
+					console.log("Page loaded. Current path:", currentPath);
 
-					// popstateイベントでブラウザバックを検出
-					window.addEventListener("popstate", () => {
-						console.log("Browser back/forward detected");
+					// 遷移用のフラグ（TOPページから遷移してきたかどうか）
+					let cameFromTop = sessionStorage.getItem("cameFromTop") === "true";
+					console.log("Came from top page:", cameFromTop);
 
-						// ビュートランジションを完全に無効化
-						document.documentElement.classList.add("no-transitions");
+					// TOPページの場合、次の遷移先のためにフラグをセット
+					if (currentPath === "/") {
+						sessionStorage.setItem("cameFromTop", "true");
+					} else {
+						sessionStorage.setItem("cameFromTop", "false");
+					}
 
-						// 通常のページ遷移を強制
-						window.location.reload();
-					});
-
-					// ページ遷移時にパスを更新
+					// Astroのビュートランジション完了後の処理
 					document.addEventListener("astro:after-swap", () => {
-						currentPath = window.location.pathname;
-
-						// トランジションクラスを削除
+						console.log(
+							"View transition completed. New path:",
+							window.location.pathname,
+						);
+						// トランジション関連のクラスをリセット
 						document.documentElement.classList.remove("no-transitions");
 					});
+
+					// popstateイベントでブラウザの戻る/進むボタンを検出
+					window.addEventListener("popstate", (event) => {
+						console.log(
+							"Browser back/forward detected, current path:",
+							currentPath,
+						);
+
+						// ブラウザバックでTOPページに戻る場合、ページをリロード
+						if (currentPath !== "/" && window.location.pathname === "/") {
+							console.log("Navigating back to top page, forcing reload");
+							// 少し遅延させてリロード（ビュートランジションが完了するのを待つ）
+							setTimeout(() => {
+								window.location.reload();
+							}, 100);
+						}
+
+						// 現在のパスを更新
+						currentPath = window.location.pathname;
+					});
+
+					// TOPページからの遷移後で、かつGalleryページ等の場合の特別な処理
+					if (cameFromTop && currentPath !== "/") {
+						console.log(
+							"This page was loaded from the top page, applying special handling if needed",
+						);
+						// 必要に応じて特別な処理を追加（例：特定のスクリプトの初期化など）
+					}
 				},
 				{ once: true },
 			);
+
+			// ビュートランジション開始前の処理
+			document.addEventListener("astro:before-preparation", (event) => {
+				// クリックされたリンク要素を取得
+				const link = event.target as HTMLAnchorElement;
+				// トップページから他のページへのリンククリック時の特別処理
+				if (
+					window.location.pathname === "/" &&
+					link &&
+					link.getAttribute("href") !== "/"
+				) {
+					console.log(
+						"Navigating from top page to:",
+						link.getAttribute("href"),
+					);
+					// TOPページからの遷移を記録
+					sessionStorage.setItem("cameFromTop", "true");
+				}
+			});
+
+			// ビュートランジション準備完了時の処理
+			document.addEventListener("astro:after-preparation", () => {
+				console.log("View transition preparation completed");
+			});
 		</script>
 	</head>
 	<body>

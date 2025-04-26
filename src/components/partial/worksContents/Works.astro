@@ -1,18 +1,205 @@
 ---
 import Header from "../../UIcontent/header/Header.astro";
 import Layout from "../../../layouts/Layout.astro";
+import { getWorkList } from "../../../library/microcms";
+import dayjs from "dayjs";
+import "dayjs/locale/ja";
+
+dayjs.locale("ja");
+
+const response = await getWorkList({ orders: "-date", limit: 100 });
+
+// 日付フォーマット関数
+const formatDate = (dateString: string) => {
+  return dayjs(dateString).format("YYYY.MM.DD");
+};
+
+// 現在の年を取得
+const currentYear = new Date().getFullYear();
+
+// 年ごとにデータを分類
+const worksByYear = response.contents.reduce((acc: any, content: any) => {
+  const year = dayjs(content.date).year();
+  if (!acc[year]) {
+    acc[year] = [];
+  }
+  acc[year].push(content);
+  return acc;
+}, {});
+
+// 年のリストを作成（降順）
+const years = Object.keys(worksByYear)
+  .map(Number)
+  .sort((a, b) => b - a);
 ---
 
 <Layout title="Works">
   <div class="content-wrapper">
     <Header title="Works" />
-    <div>Works</div>
+    <div class="works-container">
+      {
+        years.map((year) => {
+          const isCurrentYear = year === currentYear;
+          const isLastYear = year === currentYear - 1;
+          const isOlderYear = year < currentYear - 1;
+
+          let sectionTitle = `${year}`;
+          if (isOlderYear) {
+            sectionTitle = `〜${year}`;
+          }
+
+          return (
+            <div class="year-section">
+              <div class="year-header">
+                <button
+                  class="accordion-button"
+                  aria-expanded={isCurrentYear ? "true" : "false"}
+                >
+                  {sectionTitle}
+                  <span class="icon">▼</span>
+                </button>
+              </div>
+              <div
+                class="work-list-container"
+                class:list={[{ active: isCurrentYear }]}
+              >
+                <ul class="work-list">
+                  {worksByYear[year].map((content: any) => (
+                    <li class="list-item">
+                      <div class="date">{formatDate(content.date)}</div>
+                      <div class="title">
+                        {content.link ? (
+                          <a href={content.link} target="_blank">
+                            {content.title}
+                          </a>
+                        ) : (
+                          content.title
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
   </div>
 </Layout>
 
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const accordionButtons = document.querySelectorAll(".accordion-button");
+
+    accordionButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const expanded = button.getAttribute("aria-expanded") === "true";
+        button.setAttribute("aria-expanded", expanded ? "false" : "true");
+
+        const container = button
+          .closest(".year-section")
+          ?.querySelector(".work-list-container");
+        if (container) {
+          container.classList.toggle("active");
+        }
+      });
+    });
+  });
+</script>
+
 <style>
   .content-wrapper {
-    height: 100vh;
+    min-height: 100vh;
     background-color: #dadedd;
+  }
+
+  .works-container {
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 0;
+  }
+
+  .year-section {
+    margin-bottom: 20px;
+  }
+
+  .year-header {
+    margin-bottom: 10px;
+  }
+
+  .accordion-button {
+    width: 100%;
+    background-color: #f0f0f0;
+    border: none;
+    padding: 5px 10px;
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .accordion-button:hover {
+    background-color: #e8e8e8;
+  }
+
+  .accordion-button[aria-expanded="true"] {
+    background-color: #5fd3c6;
+    color: white;
+  }
+
+  .icon {
+    transition: transform 0.3s ease;
+  }
+
+  .accordion-button[aria-expanded="true"] .icon {
+    transform: rotate(180deg);
+  }
+
+  .work-list-container {
+    display: none;
+    transition: all 0.3s ease;
+  }
+
+  .work-list-container.active {
+    display: block;
+  }
+
+  .work-list {
+    padding: 0;
+    list-style: none;
+  }
+
+  .list-item {
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+    font-size: 14px;
+    font-family: "M PLUS Rounded 1c";
+  }
+
+  .date {
+    width: 100px;
+    margin-right: 10px;
+    font-size: 13px;
+    font-family: "Lexend Deca";
+  }
+
+  .title {
+    flex: 1;
+  }
+
+  .title a {
+    border-bottom: 1px dotted #1d2027;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .list-item :hover {
+    opacity: 0.8;
   }
 </style>

@@ -1,74 +1,84 @@
 ---
 import ContentsBase from "../../UIcontent/background/ContentsBase.astro";
+import { Image } from "astro:assets";
+import profileImg from "../../../img/profile/icon.png";
 ---
 
 <ContentsBase noFootImage={true}>
   <div class="contents-wrapper main-wrapper">
-    <div class="profile-image"><i class="fa-regular fa-circle-user"></i></div>
-    <div class="profile-content">
-      <div class="name">たび:)</div>
-      <div class="profile-text">
-        フリーランスイラストレーター(関西在住)。<br />
-        2023年1月本格的に活動開始。<br />
-        ふわっと可愛い女の子や小物、食べ物、植物を描くことが好きです。<br />
-        SNSでの創作イラスト公開を中心に、イラストのお仕事を承っております。<br
-        />
+    <div class="contents">
+      <Image class="profile-img" src={profileImg} alt="" />
+      <div class="profile-content">
+        <div class="name">たび:)</div>
+        <div class="profile-text">
+          フリーランスイラストレーター(関西在住)。<br />
+          2023年1月本格的に活動開始。<br />
+          ふわっと可愛い女の子や小物、食べ物、植物を描くことが好きです。<br />
+          SNSでの創作イラスト公開を中心に、イラストのお仕事を承っております。<br
+          />
+        </div>
       </div>
     </div>
   </div>
-</ContentsBase>
 
-<style>
-  .contents-wrapper {
-    padding: 60px 40px 60px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  <style>
+    .contents-wrapper {
+      padding: 60px 40px 60px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-  .profile-image {
-    display: flex;
-    align-items: center;
-  }
-  .main-wrapper {
-    flex-direction: row;
-    align-items: center;
-    gap: 20px;
-  }
+    .contents {
+      display: flex;
+      align-items: center;
+    }
 
-  .profile-content {
-    display: flex;
-    flex-direction: column;
-    color: #1d2027;
-  }
-  .profile-text {
-    font-family: "M PLUS Rounded 1c";
-  }
-
-  .fa-regular {
-    font-size: 100px;
-  }
-  .name {
-    font-family: "M PLUS Rounded 1c";
-    font-size: 28px;
-  }
-
-  @media (max-width: 768px) {
+    .profile-img {
+      width: 100px;
+      height: auto;
+      margin-right: 15px;
+    }
     .main-wrapper {
-      flex-direction: column;
-      text-align: center;
-      gap: 30px;
+      flex-direction: row;
+      align-items: center;
+      gap: 20px;
     }
 
     .profile-content {
-      align-items: center;
+      display: flex;
+      flex-direction: column;
+      color: #1d2027;
     }
-    .fa-regular {
-      font-size: 80px;
+    .profile-text {
+      font-family: "M PLUS Rounded 1c";
     }
 
-    .contents-wrapper {
-      padding: 40px 20px;
+    .fa-regular {
+      font-size: 100px;
     }
-  }
-</style>
+    .name {
+      font-family: "M PLUS Rounded 1c";
+      font-size: 28px;
+    }
+
+    @media (max-width: 768px) {
+      .main-wrapper {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+      }
+
+      .profile-content {
+        align-items: center;
+      }
+      .fa-regular {
+        font-size: 80px;
+      }
+
+      .contents-wrapper {
+        padding: 40px 20px;
+      }
+    }
+  </style>
+</ContentsBase>
