@@ -2,7 +2,7 @@
 import { isTemplateLiteralToken } from "typescript";
 import { getWorkList } from "../../../library/microcms";
 import ContentsBase from "../../UIcontent/background/ContentsBase.astro";
-const response = await getWorkList({ orders: "-date", limit: 15 });
+const response = await getWorkList({ orders: "-date", limit: 10 });
 console.log("hoge", response.contents);
 import dayjs from "dayjs";
 import "dayjs/locale/ja";

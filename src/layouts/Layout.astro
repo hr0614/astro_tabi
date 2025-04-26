@@ -4,6 +4,8 @@ import "../styles/fonts.css";
 // import "../styles/global.css";
 import { ViewTransitions } from "astro:transitions";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import Header from "../components/navigation/Header.astro";
+
 interface Props {
 	title: string;
 	defaultTransition?: string; // ページのデフォルトトランジション
@@ -114,7 +116,10 @@ const { title, defaultTransition = "fade" } = Astro.props;
 		</script>
 	</head>
 	<body>
-		<slot />
+		<Header />
+		<main class="main-content">
+			<slot />
+		</main>
 	</body>
 </html>
 
@@ -134,6 +139,18 @@ const { title, defaultTransition = "fade" } = Astro.props;
 	html[data-default-transition="fade"] ::view-transition-new(root) {
 		animation-name: fade-in;
 	}
+
+	/* メインコンテンツのスタイル
+	.main-content {
+		padding-top: 60px; ヘッダーの高さ分
+	}
+
+	/* スマートフォン用 */
+	/* @media (max-width: 839px) {
+		.main-content {
+			padding-top: 50px;
+		}
+	} */
 
 	/* スライドトランジション */
 	html[data-default-transition="slide"] ::view-transition-old(root) {
