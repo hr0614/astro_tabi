@@ -1,1 +1,30 @@
-<div>Information</div>
+---
+import Header from "../../UIcontent/header/Header.astro";
+import Layout from "../../../layouts/Layout.astro";
+import { ArticleList } from "./ArticleList";
+
+// 現在のURLクエリパラメータを取得
+const url = Astro.url;
+const searchParams = url.searchParams;
+const currentCategory = searchParams.get("category");
+---
+
+<Layout title="Information">
+  <div class="content-wrapper">
+    <Header title="Information" />
+    <div class="article-area">
+      <ArticleList client:load />
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .content-wrapper {
+    min-height: 100vh;
+    background-color: #dadedd;
+  }
+
+  .article-area {
+    margin-top: 20px;
+  }
+</style>

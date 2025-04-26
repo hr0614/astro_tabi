@@ -8,6 +8,7 @@ type Props = {
   imageUrl: string | undefined,
   date: string,
   category: string,
+  excerpt?: string,
 }
 
 export default function InfoItem(props: Props) {
@@ -21,6 +22,7 @@ export default function InfoItem(props: Props) {
           <div className={s.categoryLabel} data-category={props.category}>{props.category}</div>
         </div>
         <div className={s.title}>{props.title}</div>
+        {props.excerpt && <div className={s.excerpt}>{props.excerpt}</div>}
       </div>
     </div>
     // <motion.div className={s.itemWrapper} initial={{ opacity: 0 }}

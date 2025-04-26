@@ -1,8 +1,8 @@
 ---
 import { isTemplateLiteralToken } from "typescript";
-import { getArticles } from "../../../library/microcms";
+import { getWorkList } from "../../../library/microcms";
 import ContentsBase from "../../UIcontent/background/ContentsBase.astro";
-const response = await getArticles({ filters: "category[contains]お仕事" });
+const response = await getWorkList({ orders: "-date" });
 console.log("hoge", response.contents);
 import dayjs from "dayjs";
 import "dayjs/locale/ja";
@@ -19,8 +19,16 @@ const formatDate = (dateString: string) => {
       {
         response.contents.map((content: any) => (
           <li class="list-item">
-            <div class="date">{formatDate(content.publishedAt)}</div>
-            <div class="title">{content.title}</div>
+            <div class="date">{formatDate(content.date)}</div>
+            <div class="title">
+              {content.link ? (
+                <a href={content.link} target="_blank">
+                  {content.title}
+                </a>
+              ) : (
+                content.title
+              )}
+            </div>
           </li>
         ))
       }
@@ -44,10 +52,17 @@ const formatDate = (dateString: string) => {
     display: flex;
     font-size: 14px;
     margin-bottom: 12px;
-    border-bottom: 1px dotted #1d2027;
     font-family: "M PLUS Rounded 1c";
   }
+  .list-item a {
+    border-bottom: 1px dotted #1d2027;
+    text-decoration: none;
+    cursor: pointer;
+  }
 
+  .list-item :hover {
+    opacity: 0.8;
+  }
   .date {
     margin-right: 15px;
     font-size: 13px;

@@ -1,0 +1,64 @@
+---
+import FontAwesomeIcon from "../../../layouts/FontAwesomeIcon.astro";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { Image } from "astro:assets";
+import headImage from "../../../img/header/infoHead.png";
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<div class="head-container">
+  <a href="/" class="arrow"><FontAwesomeIcon icon={faArrowLeft} /></a>
+  <div class="title">
+    <p>{title}</p><Image class="head-image" src={headImage} alt="" />
+  </div>
+</div>
+
+<style>
+  .head-container {
+    display: flex;
+    position: relative;
+    padding-top: 30px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .arrow {
+    position: absolute;
+    left: 5%;
+    align-items: center;
+    font-size: 25px;
+    color: #b7b8b9;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .arrow:hover {
+    /* color: #5fd3c6; */
+    color: #1d2027;
+    transform: translateX(-5px);
+  }
+  .head-image {
+    width: 40px;
+    height: auto;
+    margin-left: 10px;
+  }
+  .title {
+    display: flex;
+    margin: 0 auto;
+    width: 80%;
+    max-width: 850px;
+    text-align: left;
+    border-bottom: 2px dashed white;
+    font-family: "Rowdies Regular";
+    font-size: 36px;
+  }
+
+  .title p {
+    margin-left: 10px;
+    line-height: 40px;
+    display: inline-block;
+  }
+</style>

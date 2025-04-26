@@ -1,0 +1,210 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/UIcontent/header/Header.astro";
+import { getArticles } from "../../library/microcms";
+import dayjs from "dayjs";
+import "dayjs/locale/ja";
+
+// SSRモードで動的ルートを有効にする
+export const prerender = false;
+
+// 記事データの取得
+export async function getStaticPaths() {
+  try {
+    const response = await getArticles({ limit: 100 });
+
+    return response.contents.map((content) => ({
+      params: { blogId: content.id },
+      props: { content },
+    }));
+  } catch (error) {
+    console.error("Error fetching articles:", error);
+    return [];
+  }
+}
+
+const { blogId } = Astro.params;
+let content;
+let error;
+
+try {
+  if (blogId) {
+    // 個別記事を取得
+    const response = await getArticles({ filters: `id[equals]${blogId}` });
+    content = response.contents[0] || null;
+  }
+} catch (e) {
+  console.error("Error fetching article:", e);
+  error = e;
+}
+
+// フォーマット
+const formattedDate = content
+  ? dayjs(content.publishedAt).format("YYYY.MM.DD")
+  : "";
+---
+
+<Layout title={content?.title || "記事が見つかりません"}>
+  <div class="content-wrapper">
+    <Header title="Information" />
+    {
+      content ? (
+        <div class="article-container">
+          <div class="article-header">
+            <div class="date">{formattedDate}</div>
+            <div class="category-badge" data-category={content.category[0]}>
+              {content.category[0]}
+            </div>
+            <h1 class="title">{content.title}</h1>
+          </div>
+
+          {/* {content.thumbnail && (
+            <div class="thumbnail">
+              <img src={content.thumbnail.url} alt={content.title} />
+            </div>
+          )} */}
+
+          <div class="article-body" set:html={content.content} />
+
+          <div class="back-link">
+            <a href="/info">記事一覧に戻る</a>
+          </div>
+        </div>
+      ) : (
+        <div class="error-container">
+          <h2>記事が見つかりませんでした</h2>
+          <p>お探しの記事は存在しないか、削除された可能性があります。</p>
+          <div class="back-link">
+            <a href="/info">記事一覧に戻る</a>
+          </div>
+        </div>
+      )
+    }
+  </div>
+</Layout>
+
+<style is:global>
+  .article-body {
+    font-family: "M PLUS Rounded 1c";
+    line-height: 1.7;
+    color: #333;
+  }
+
+  /* 記事本文内の画像スタイル */
+  .article-body img {
+    width: 70%;
+    height: auto;
+  }
+</style>
+
+<style>
+  .content-wrapper {
+    min-height: 100vh;
+    background-color: #dadedd;
+    padding: 20px 0;
+  }
+
+  .article-container,
+  .error-container {
+    width: 80%;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .error-container {
+    text-align: center;
+    padding: 60px 30px;
+  }
+
+  .error-container h2 {
+    font-family: "M PLUS Rounded 1c";
+    color: #555;
+    margin-bottom: 20px;
+  }
+
+  .error-container p {
+    color: #777;
+    margin-bottom: 30px;
+  }
+
+  .article-header {
+    margin-bottom: 30px;
+  }
+
+  .category-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    color: #fff;
+    background-color: #5fd3c6;
+    margin-right: 10px;
+  }
+
+  .category-badge[data-category="お知らせ"] {
+    background-color: #f4b4a5;
+  }
+
+  .category-badge[data-category="お仕事"] {
+    background-color: #a4e1ea;
+  }
+
+  .category-badge[data-category="イベント"] {
+    background-color: #c3dd9e;
+  }
+
+  .date {
+    display: inline-block;
+    font-family: "Lexend Deca";
+    color: #626262;
+    font-size: 14px;
+  }
+
+  .title {
+    font-family: "M PLUS Rounded 1c";
+    font-size: 24px;
+    margin-top: 10px;
+    color: #1d2027;
+  }
+
+  .thumbnail {
+    margin-bottom: 30px;
+  }
+
+  .thumbnail img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+  .back-link {
+    margin-top: 40px;
+    text-align: center;
+  }
+
+  .back-link a {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 20px;
+    background-color: #f5f5f5;
+    color: #555;
+    text-decoration: none;
+    font-family: "M PLUS Rounded 1c";
+    transition: all 0.3s ease;
+  }
+
+  .back-link a:hover {
+    background-color: #5fd3c6;
+    color: #fff;
+  }
+
+  .article-body img {
+    max-width: 70%;
+    height: auto;
+    display: block;
+  }
+</style>

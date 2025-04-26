@@ -1,6 +1,7 @@
 .itemWrapper {
   width: 100%;
-  height: 150px;
+  height: auto;
+  min-height: 150px;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 20px;
   box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.3);
@@ -11,11 +12,23 @@
 .dateWrapper {
   display: flex;
   flex-direction: row;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 .imageArea {
   width: 200px;
+  height: 160px;
+  min-width: 200px;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+@media screen and (max-width: 839px) {
+  .imageArea {
+    width: 170px;
+    height: 120px;
+  }
 }
 
 .imageArea img {
@@ -23,10 +36,17 @@
   height: 100%;
   border-radius: 20px 0 0 20px;
   object-fit: cover;
+  /* position: absolute;
+  top: 0;
+  left: 0; */
 }
 
 .textArea {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+  min-height: 150px;
 }
 
 .date {
@@ -54,7 +74,6 @@
 
 .categoryLabel[data-category="お知らせ"] {
   background-color: #F4B4A5;
-
 }
 
 .title {
@@ -64,4 +83,28 @@
   color: #1D2027;
   letter-spacing: 1px;
   padding: 0 10px 10px 10px;
+}
+
+@media screen and (max-width: 839px) {
+  .title {
+    font-size: 12px;
+  }
+}
+
+.excerpt {
+  font-size: 12px;
+  font-family: 'M PLUS Rounded 1c';
+  color: #626262;
+  line-height: 1.4;
+  padding: 0 10px;
+  margin-top: -5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+@media screen and (max-width: 839px) {
+  -webkit-line-clamp: 2;
 }

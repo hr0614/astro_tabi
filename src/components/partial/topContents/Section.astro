@@ -1,11 +1,13 @@
 ---
 import { Image } from "astro:assets";
+import TransitionLink from "../../UIcontent/transitionOption/TransitionLink.astro";
 const {
   color,
   height,
   rounded = true,
   headImage,
   footImage,
+  link,
   isTop = false,
 } = Astro.props;
 // import TransitionLink from "../components/transitionOption/TransitionLink.astro";
@@ -26,13 +28,14 @@ const {
   {
     footImage && (
       <div class="foot_container">
-        {/* <TransitionLink href="/gallery" transition="slide">
+        <TransitionLink
+          href={link}
+          transition="slide"
+          class="section-link"
+          data-from-top="true"
+        >
           <Image class="foot_image" src={footImage} alt="" />
-        </TransitionLink> */}
-
-        <a href="/gallery">
-          <Image class="foot_image" src={footImage} alt="" />
-        </a>
+        </TransitionLink>
       </div>
     )
   }
@@ -78,5 +81,33 @@ const {
   .foot_image {
     width: 200px;
     height: auto;
+    transition: transform 0.3s ease;
+  }
+
+  /* ホバーエフェクト追加 */
+  .section-link:hover .foot_image {
+    transform: scale(1.05);
   }
 </style>
+
+<script>
+  // セクションリンクのトラッキング
+  document.addEventListener("astro:page-load", () => {
+    const sectionLinks = document.querySelectorAll(".section-link");
+
+    sectionLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        console.log(
+          "Section link clicked: ",
+          (e.currentTarget as HTMLAnchorElement).href,
+        );
+        // TOPページからの遷移を記録
+        sessionStorage.setItem("cameFromTop", "true");
+        sessionStorage.setItem(
+          "lastClickedSection",
+          (e.currentTarget as HTMLAnchorElement).href,
+        );
+      });
+    });
+  });
+</script>

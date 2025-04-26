@@ -85,11 +85,31 @@ const response = await getIllust({ filters: "pickup[equals]true" });
   import { Navigation, Pagination } from "swiper/modules";
   import "swiper/css/bundle";
 
-  export const swiperConfig = {
+  // Swiperの設定
+  const swiperConfig = {
     modules: [Navigation, Pagination],
     // Optional parameters
     loop: true,
     slidesPerView: 4,
+    observer: true, // DOMの変更を監視
+    observeParents: true, // 親要素の変更も監視
+    updateOnWindowResize: true, // ウィンドウサイズ変更時に更新
+
+    // レスポンシブ設定
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+      },
+      640: {
+        slidesPerView: 2,
+      },
+      768: {
+        slidesPerView: 3,
+      },
+      1024: {
+        slidesPerView: 4,
+      },
+    },
 
     // If we need pagination
     pagination: {
@@ -108,5 +128,71 @@ const response = await getIllust({ filters: "pickup[equals]true" });
       el: ".swiper-scrollbar",
     },
   };
-  const swiper = new Swiper(".swiper", swiperConfig);
+
+  // Swiperのインスタンスを保持する変数
+  let swiper: Swiper | undefined;
+
+  // 初期化関数
+  function initSwiper() {
+    console.log("Initializing Swiper...");
+
+    // 既存のSwiperインスタンスがあれば破棄
+    if (swiper && typeof swiper.destroy === "function") {
+      console.log("Destroying existing Swiper instance...");
+      swiper.destroy(true, true);
+    }
+
+    // コンテナが存在するか確認
+    const swiperContainer = document.querySelector(".swiper");
+    if (!swiperContainer) {
+      console.error("Swiper container not found");
+      return;
+    }
+
+    // スライド要素があるか確認
+    const slides = document.querySelectorAll(".swiper-slide");
+    if (slides.length === 0) {
+      console.error("No slides found");
+      return;
+    }
+
+    // 画像の読み込みが完了してからSwiperを初期化
+    Promise.all(
+      Array.from(document.querySelectorAll(".swiper-slide img")).map((img) => {
+        return new Promise((resolve) => {
+          if ((img as HTMLImageElement).complete) {
+            resolve(true);
+          } else {
+            img.addEventListener("load", () => resolve(true));
+            img.addEventListener("error", () => resolve(false));
+          }
+        });
+      }),
+    ).then(() => {
+      console.log("All images loaded, creating Swiper instance");
+      // 新しいSwiperインスタンスを作成
+      setTimeout(() => {
+        swiper = new Swiper(".swiper", swiperConfig);
+        console.log("Swiper instance created:", swiper);
+      }, 100); // 少し遅延させて初期化
+    });
+  }
+
+  // ページ読み込み時とビュートランジション後に実行
+  document.addEventListener("astro:page-load", () => {
+    console.log("astro:page-load event fired, initializing Swiper");
+    initSwiper();
+  });
+
+  // ブラウザバックの場合も再初期化
+  window.addEventListener("popstate", () => {
+    console.log("Browser back/forward detected, reinitializing Swiper");
+    setTimeout(initSwiper, 100);
+  });
+
+  // レイアウト更新時も再初期化（ビュートランジション後）
+  document.addEventListener("astro:after-swap", () => {
+    console.log("astro:after-swap event fired, reinitializing Swiper");
+    setTimeout(initSwiper, 100);
+  });
 </script>
