@@ -9,6 +9,12 @@
   flex-direction: row;
 }
 
+@media screen and (max-width: 839px) {
+  .itemWrapper {
+    min-height: 100px;
+  }
+}
+
 .dateWrapper {
   display: flex;
   flex-direction: row;
@@ -26,8 +32,9 @@
 
 @media screen and (max-width: 839px) {
   .imageArea {
-    width: 170px;
-    height: 120px;
+    width: 130px;
+    height: 100px;
+    min-width: 0px;
   }
 }
 
@@ -47,6 +54,12 @@
   flex-direction: column;
   padding-bottom: 10px;
   min-height: 150px;
+}
+
+@media screen and (max-width: 839px) {
+  .textArea {
+    min-height: 0px;
+  }
 }
 
 .date {
@@ -83,11 +96,19 @@
   color: #1D2027;
   letter-spacing: 1px;
   padding: 0 10px 10px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 @media screen and (max-width: 839px) {
   .title {
     font-size: 12px;
+    -webkit-line-clamp: 2;
+    max-height: 2.8em;
+    line-height: 1.4;
   }
 }
 
@@ -106,5 +127,7 @@
 }
 
 @media screen and (max-width: 839px) {
-  -webkit-line-clamp: 2;
+  .excerpt {
+    -webkit-line-clamp: 2;
+  }
 }

@@ -53,11 +53,22 @@ const {
   .not-top {
     padding: 0 50px;
   }
+  @media screen and (max-width: 839px) {
+    .not-top {
+      padding: 0;
+    }
+  }
 
   .rounded {
     display: flex;
     justify-content: space-around;
     flex-direction: column;
+  }
+
+  @media screen and (max-width: 839px) {
+    .rounded {
+      padding: 20px 0;
+    }
   }
 
   .head_container {
@@ -87,6 +98,18 @@ const {
   /* ホバーエフェクト追加 */
   .section-link:hover .foot_image {
     transform: scale(1.05);
+  }
+
+  @media screen and (max-width: 839px) {
+    .foot_container {
+      margin-bottom: 40px;
+    }
+  }
+
+  .foot_image {
+    width: 170px;
+    height: auto;
+    transition: transform 0.3s ease;
   }
 </style>
 

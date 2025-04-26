@@ -25,18 +25,7 @@ export default function InfoItem(props: Props) {
         {props.excerpt && <div className={s.excerpt}>{props.excerpt}</div>}
       </div>
     </div>
-    // <motion.div className={s.itemWrapper} initial={{ opacity: 0 }}
-    //   animate={{ opacity: 1 }}
-    //   transition={{ duration: 1, delay: props.index * 0.2 }} key={props.index}>
-    //   <div className={s.imageArea}><img src={props.imageUrl ? props.imageUrl : infosample.src} alt="" /></div>
-    //   <div className={s.textArea}>
-    //     <div className={s.dateWrapper}>
-    //       <div className={s.date}>{formattedDate}</div>
-    //       <div className={s.categoryLabel}>{props.category}</div>
-    //     </div>
-    //     <div className={s.title}>{props.title}</div>
-    //   </div>
-    // </motion.div>
+
 
   )
 }

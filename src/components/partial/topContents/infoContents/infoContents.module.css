@@ -25,6 +25,13 @@
   gap: 15px;
 }
 
+@media screen and (max-width: 839px) {
+  .infoItems {
+    gap: 10px;
+    padding: 0;
+  }
+}
+
 @media (min-width: 768px) {
   .infoItems {
     grid-template-columns: repeat(2, 1fr);

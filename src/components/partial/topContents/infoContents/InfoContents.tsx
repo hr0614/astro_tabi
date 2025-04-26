@@ -15,20 +15,57 @@ type Item = {
 
 export const InfoContents = () => {
   const [items, setItems] = useState<Item[]>()
-  // console.log(cats);
-  const fetchItems = async () => {
-    const res = await fetch("https://hari-test.microcms.io/api/v1/info?limit=6", {
-      headers: {
-        "X-MICROCMS-API-KEY": import.meta.env.PUBLIC_MICROCMS_API_KEY || '',
-      },
-    });
-    const data = await res.json()
-    setItems(data.contents)
+  const [isMobile, setIsMobile] = useState(false)
+  const [isInitialized, setIsInitialized] = useState(false)
+
+  // レスポンシブ対応のためのスクリーンサイズチェック
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const mobile = window.innerWidth <= 768
+      setIsMobile(mobile)
+    }
+
+    // 初期チェック
+    checkScreenSize()
+    setIsInitialized(true)
+
+    // リサイズイベントリスナー
+    window.addEventListener('resize', checkScreenSize)
+
+    // クリーンアップ
+    return () => {
+      window.removeEventListener('resize', checkScreenSize)
+    }
+  }, [])
+
+  // 記事取得関数
+  const fetchItems = async (limit: number) => {
+    try {
+      const res = await fetch(`https://hari-test.microcms.io/api/v1/info?limit=${limit}`, {
+        headers: {
+          "X-MICROCMS-API-KEY": import.meta.env.PUBLIC_MICROCMS_API_KEY || '',
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error(`API error: ${res.status}`)
+      }
+
+      const data = await res.json()
+      setItems(data.contents)
+    } catch (error) {
+      console.error('Failed to fetch items:', error)
+    }
   }
 
+  // 初期化と画面サイズ変更時に記事を取得
   useEffect(() => {
-    fetchItems()
-  }, [])
+    if (isInitialized) {
+      const limit = isMobile ? 4 : 6
+      console.log(`Fetching with limit: ${limit}, isMobile: ${isMobile}`)
+      fetchItems(limit)
+    }
+  }, [isMobile, isInitialized])
 
   // HTMLからプレーンテキストを抽出
   const getPlainTextFromHTML = (html: string) => {
@@ -70,6 +107,5 @@ export const InfoContents = () => {
         })}
       </ul>
     </div>
-
   )
 }

@@ -131,12 +131,14 @@ const years = Object.keys(worksByYear)
 
   .accordion-button {
     width: 100%;
+    font-family: "Rowdies Regular";
     background-color: #f0f0f0;
+    color: #626262;
     border: none;
     padding: 5px 10px;
     text-align: left;
     font-size: 18px;
-    font-weight: bold;
+    /* font-weight: bold; */
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -201,5 +203,19 @@ const years = Object.keys(worksByYear)
 
   .list-item :hover {
     opacity: 0.8;
+  }
+
+  @media screen and (max-width: 839px) {
+    .works-container {
+      width: 90%;
+    }
+    .title {
+      font-size: 12px;
+    }
+    .date {
+      width: 70px;
+      font-size: 12px;
+      margin: 0;
+    }
   }
 </style>
