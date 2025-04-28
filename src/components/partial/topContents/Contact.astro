@@ -110,12 +110,26 @@ import ContactButton from "./ContactButton.astro";
     color: #5fd3c6;
   }
 
-  @media screen and (max-width: 839px) {
+  @media screen and (max-width: 719px) {
     .about-text {
       font-size: 14px;
     }
     .social-link-wrapper {
       margin-bottom: 20px;
+    }
+
+    .footer-wrapper {
+      width: 75%;
+      margin: 0 auto;
+    }
+  }
+
+  @media screen and (max-height: 679px) {
+    .social-link-wrapper {
+      margin-bottom: 20px;
+    }
+    .address-wrapper {
+      margin-bottom: 0;
     }
   }
 </style>

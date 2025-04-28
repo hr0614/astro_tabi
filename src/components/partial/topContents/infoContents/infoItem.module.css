@@ -15,6 +15,8 @@
   }
 }
 
+
+
 .dateWrapper {
   display: flex;
   flex-direction: row;
@@ -69,11 +71,16 @@
   padding: 3px 10px;
 }
 
+.labelWrapper {
+  display: flex;
+  align-items: center;
+}
+
 .categoryLabel {
   font-family: 'M PLUS Rounded 1c';
-  font-size: 12px;
+  font-size: 11px;
   color: white;
-  padding: 4px 6px;
+  padding: 3px 5px;
 }
 
 /* カテゴリー別の背景色 */
@@ -103,14 +110,8 @@
   -webkit-box-orient: vertical;
 }
 
-@media screen and (max-width: 839px) {
-  .title {
-    font-size: 12px;
-    -webkit-line-clamp: 2;
-    max-height: 2.8em;
-    line-height: 1.4;
-  }
-}
+
+
 
 .excerpt {
   font-size: 12px;
@@ -127,7 +128,26 @@
 }
 
 @media screen and (max-width: 839px) {
+  .title {
+    font-size: 12px;
+    -webkit-line-clamp: 2;
+    max-height: 2.8em;
+    line-height: 1.4;
+  }
+
   .excerpt {
+    -webkit-line-clamp: 2;
+  }
+}
+
+@media screen and (min-width: 720px) and (max-width: 920px) {
+  .title {
+    font-size: 13px;
+
+  }
+
+  .excerpt {
+    display: -webkit-box;
     -webkit-line-clamp: 2;
   }
 }

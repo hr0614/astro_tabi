@@ -21,8 +21,9 @@ export const InfoContents = () => {
   // レスポンシブ対応のためのスクリーンサイズチェック
   useEffect(() => {
     const checkScreenSize = () => {
-      const mobile = window.innerWidth <= 768
-      setIsMobile(mobile)
+      const mobile = window.innerWidth <= 768;
+      const shortHeight = window.innerHeight <= 679;
+      setIsMobile(mobile || shortHeight);
     }
 
     // 初期チェック

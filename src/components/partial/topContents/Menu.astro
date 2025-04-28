@@ -60,9 +60,9 @@ import { faInstagram } from "@fortawesome/free-brands-svg-icons";
     font-family: "Playwrite NZ", serif;
     font-weight: 200;
     font-style: normal;
-    font-size: min(5vw, 45px);
+    font-size: min(5dvw, 6dvh, 45px);
     letter-spacing: 0px;
-    line-height: min(5vw, 50px);
+    line-height: min(5dvw, 6dvh, 50px);
     width: 100%;
     text-align: center;
     /* margin: 10px 20px; */
@@ -71,7 +71,7 @@ import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
   .menu_list {
     position: relative;
-    margin-top: 10vh;
+    margin-top: 10dvh;
     width: 17vw;
     background-color: #ededed;
     padding: 44px 0;
@@ -118,5 +118,11 @@ import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
   .social-icon:hover {
     opacity: 0.5;
+  }
+
+  @media screen and (max-height: 679px) {
+    .menu_list {
+      margin-top: 4dvh;
+    }
   }
 </style>

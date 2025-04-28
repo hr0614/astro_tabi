@@ -19,7 +19,7 @@ export default function InfoItem(props: Props) {
       <div className={s.textArea}>
         <div className={s.dateWrapper}>
           <div className={s.date}>{formattedDate}</div>
-          <div className={s.categoryLabel} data-category={props.category}>{props.category}</div>
+          <div className={s.labelWrapper}><div className={s.categoryLabel} data-category={props.category}>{props.category}</div></div>
         </div>
         <div className={s.title}>{props.title}</div>
         {props.excerpt && <div className={s.excerpt}>{props.excerpt}</div>}
