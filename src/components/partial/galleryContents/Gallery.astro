@@ -1,0 +1,20 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../UIcontent/header/Header.astro";
+import { MasonryContents } from "./MasonryContents";
+---
+
+<Layout title="Gallery">
+  <div class="contents-wrapper">
+    <Header title="Gallery" />
+    <MasonryContents client:only="react" />
+  </div>
+</Layout>
+
+<style>
+  .contents-wrapper {
+    background-color: #dadedd;
+    min-height: 100vh;
+    padding: 20px 0;
+  }
+</style>
