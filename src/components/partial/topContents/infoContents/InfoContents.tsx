@@ -16,14 +16,52 @@ type Item = {
 export const InfoContents = () => {
   const [items, setItems] = useState<Item[]>()
   const [isMobile, setIsMobile] = useState(false)
+  const [isMediumScreen, setIsMediumScreen] = useState(false)
+  const [isLowHeight, setIsLowHeight] = useState(false)
   const [isInitialized, setIsInitialized] = useState(false)
+  const [displayLimit, setDisplayLimit] = useState(6)
 
   // レスポンシブ対応のためのスクリーンサイズチェック
   useEffect(() => {
     const checkScreenSize = () => {
       const mobile = window.innerWidth <= 768;
       const shortHeight = window.innerHeight <= 679;
+      const mediumScreen = window.innerWidth > 720 && window.innerWidth <= 1024;
+      const lowHeight = window.innerHeight <= 720;
+      const width = window.innerWidth;
+
       setIsMobile(mobile || shortHeight);
+      setIsMediumScreen(mediumScreen);
+      setIsLowHeight(lowHeight);
+
+      // 表示数の決定
+      let limit = 6;  // デフォルト値
+
+      // 画面の高さが720px以下の場合
+      if (lowHeight) {
+        // 幅も820px以下の場合は3件表示
+        if (width <= 820) {
+          limit = 3;
+        }
+        // 幅が820pxより大きい場合は4件表示
+        else {
+          limit = 4;
+        }
+      }
+      // 画面の高さが十分ある場合
+      else {
+        // モバイルまたは中間サイズ画面
+        if (mobile || mediumScreen) {
+          limit = 4;
+        }
+        // それ以外（大画面）
+        else {
+          limit = 6;
+        }
+      }
+
+      setDisplayLimit(limit);
+      console.log(`Display limit set to: ${limit}, width: ${width}, height: ${window.innerHeight}, lowHeight: ${lowHeight}, width <= 820: ${width <= 820}`);
     }
 
     // 初期チェック
@@ -39,10 +77,10 @@ export const InfoContents = () => {
     }
   }, [])
 
-  // 記事取得関数
-  const fetchItems = async (limit: number) => {
+  // 記事取得関数 - 常に最大数(6件)を取得
+  const fetchItems = async () => {
     try {
-      const res = await fetch(`https://hari-test.microcms.io/api/v1/info?limit=${limit}`, {
+      const res = await fetch(`https://hari-test.microcms.io/api/v1/info?limit=6`, {
         headers: {
           "X-MICROCMS-API-KEY": import.meta.env.PUBLIC_MICROCMS_API_KEY || '',
         },
@@ -59,14 +97,13 @@ export const InfoContents = () => {
     }
   }
 
-  // 初期化と画面サイズ変更時に記事を取得
+  // 初期化時に一度だけ記事を取得
   useEffect(() => {
     if (isInitialized) {
-      const limit = isMobile ? 4 : 6
-      console.log(`Fetching with limit: ${limit}, isMobile: ${isMobile}`)
-      fetchItems(limit)
+      console.log('Fetching items once at initialization');
+      fetchItems();
     }
-  }, [isMobile, isInitialized])
+  }, [isInitialized])
 
   // HTMLからプレーンテキストを抽出
   const getPlainTextFromHTML = (html: string) => {
@@ -92,7 +129,7 @@ export const InfoContents = () => {
   return (
     <div className={s.infoList} >
       <ul className={s.infoItems}>
-        {items && items.map((item, index) => {
+        {items && items.slice(0, displayLimit).map((item, index) => {
           return (
             <li className={s.item} key={index}>
               <a href={`/info/${item.id}`} className={s.articleLink}>

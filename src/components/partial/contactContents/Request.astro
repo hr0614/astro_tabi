@@ -2,6 +2,7 @@
 import Layout from "../../../layouts/Layout.astro";
 import Header from "../../UIcontent/header/Header.astro";
 import FontAwesomeIcon from "../../../layouts/FontAwesomeIcon.astro";
+import BackButton from "../../UIcontent/button/BackButton.astro";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 ---
 
@@ -85,9 +86,7 @@ import { faCopy } from "@fortawesome/free-solid-svg-icons";
         </div>
       </div>
     </div>
-    <div class="back-link">
-      <a href="/">TOPへ戻る</a>
-    </div>
+    <BackButton />
   </div>
 
   <style>
@@ -204,27 +203,6 @@ import { faCopy } from "@fortawesome/free-solid-svg-icons";
     .mail-container .copy-message {
       bottom: 35px;
       right: 0;
-    }
-
-    .back-link {
-      margin-top: 15px;
-      text-align: center;
-    }
-
-    .back-link a {
-      display: inline-block;
-      padding: 8px 20px;
-      border-radius: 20px;
-      background-color: #f5f5f5;
-      color: #555;
-      text-decoration: none;
-      font-family: "M PLUS Rounded 1c";
-      transition: all 0.3s ease;
-    }
-
-    .back-link a:hover {
-      background-color: #5fd3c6;
-      color: #fff;
     }
 
     @media screen and (max-width: 839px) {

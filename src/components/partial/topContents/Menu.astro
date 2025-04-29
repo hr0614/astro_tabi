@@ -12,13 +12,29 @@ import { faInstagram } from "@fortawesome/free-brands-svg-icons";
   <div class="title_text">tabi :)<br />Illustration</div>
   <div class="menu_list">
     <ul>
-      <li class="menu_title">Info</li>
-      <li class="menu_title">Illust</li>
-      <li class="menu_title">Work</li>
-      <li class="menu_title">Profile</li>
-      <li class="menu_title">Contact</li>
       <li class="menu_title">
-        Xfolio<i class="fa-solid fa-arrow-up-right-from-square"></i>
+        <a href="#info-section" class="menu-link">Info</a>
+      </li>
+      <li class="menu_title">
+        <a href="#illust-section" class="menu-link">Illust</a>
+      </li>
+      <li class="menu_title">
+        <a href="#work-section" class="menu-link">Work</a>
+      </li>
+      <li class="menu_title">
+        <a href="#profile-section" class="menu-link">Profile</a>
+      </li>
+      <li class="menu_title">
+        <a href="#contact-section" class="menu-link">Contact</a>
+      </li>
+      <li class="menu_title">
+        <a
+          href="https://xfolio.jp/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="menu-link"
+          >Xfolio<i class="fa-solid fa-arrow-up-right-from-square"></i></a
+        >
       </li>
     </ul>
     <Image src={accentTop} class="accent-top" alt="" />
@@ -94,6 +110,19 @@ import { faInstagram } from "@fortawesome/free-brands-svg-icons";
     color: #ffffff;
   }
 
+  /* .menu_title.active {
+    background-color: #5fd3c6;
+    color: #ffffff;
+  } */
+
+  .menu-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
   .accent-top {
     position: absolute;
     top: 0px;
@@ -126,3 +155,38 @@ import { faInstagram } from "@fortawesome/free-brands-svg-icons";
     }
   }
 </style>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    // セクションへのスクロール機能
+    const menuLinks = document.querySelectorAll(".menu-link");
+
+    menuLinks.forEach((link) => {
+      // 外部リンク（Xfolio）の場合はスキップ
+      if (link.getAttribute("target") === "_blank") {
+        return;
+      }
+
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        const targetId = link.getAttribute("href");
+        if (!targetId || !targetId.startsWith("#")) return;
+
+        const targetElement = document.querySelector(targetId);
+        if (!targetElement) return;
+
+        // スムーズにスクロール
+        targetElement.scrollIntoView({
+          behavior: "smooth",
+        });
+
+        // メニュー項目をハイライト
+        document.querySelectorAll(".menu_title").forEach((item) => {
+          item.classList.remove("active");
+        });
+        (link.closest(".menu_title") as HTMLElement).classList.add("active");
+      });
+    });
+  });
+</script>

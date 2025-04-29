@@ -25,10 +25,11 @@ import footImage from "../img/footImage/ViewMore_A.png";
     <!-- Infoセクション -->
     <Section
       color="#DADEDD"
-      height="600px"
+      height="100dvh"
       headImage={infoHeadImage}
       footImage={footImage}
       link="/info"
+      id="info-section"
     >
       <ProfileBg slot="background" />
       <Info />
@@ -37,10 +38,11 @@ import footImage from "../img/footImage/ViewMore_A.png";
     <!-- Illustセクション -->
     <Section
       color="#DADEDD"
-      height="600px"
+      height="100dvh"
       headImage={illustHeadImage}
       footImage={footImage}
       link="/gallery"
+      id="illust-section"
     >
       <ContactBg slot="background" />
       <Illust />
@@ -49,22 +51,33 @@ import footImage from "../img/footImage/ViewMore_A.png";
     <!-- Workセクション -->
     <Section
       color="#DADEDD"
-      height="600px"
+      height="100dvh"
       headImage={workHeadImage}
       footImage={footImage}
       link="/works"
+      id="work-section"
     >
       <ContactBg slot="background" />
       <Work />
     </Section>
 
     <!-- Profileセクション -->
-    <Section color="#DADEDD" height="600px" headImage={profileHeadImage}>
+    <Section
+      color="#DADEDD"
+      height="100dvh"
+      headImage={profileHeadImage}
+      id="profile-section"
+    >
       <ProfileBg slot="background" />
       <Profile />
     </Section>
     <!-- Contactセクション -->
-    <Section color="#DADEDD" height="600px" headImage={contactHeadImage}>
+    <Section
+      color="#DADEDD"
+      height="100dvh"
+      headImage={contactHeadImage}
+      id="contact-section"
+    >
       <ContactBg slot="background" />
       <Contact />
     </Section>

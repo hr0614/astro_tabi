@@ -9,11 +9,12 @@ const {
   footImage,
   link,
   isTop = false,
+  id,
 } = Astro.props;
 // import TransitionLink from "../components/transitionOption/TransitionLink.astro";
 ---
 
-<div class:list={["area", { rounded: rounded, "not-top": !isTop }]}>
+<div class:list={["area", { rounded: rounded, "not-top": !isTop }]} id={id}>
   <slot name="background" />
   {
     headImage && (

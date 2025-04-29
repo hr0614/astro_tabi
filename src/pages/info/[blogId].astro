@@ -42,11 +42,32 @@ try {
 const formattedDate = content
   ? dayjs(content.publishedAt).format("YYYY.MM.DD")
   : "";
+
+// リファラーからページパラメータを取得するか、URLからの直接アクセスの場合は前のページ情報を使用
+const referer = Astro.request.headers.get("referer");
+let previousPage = "";
+let previousPageUrl = referer || "/info"; // リファラーがある場合はそれを使用、なければinfoページへ
+
+if (referer) {
+  try {
+    const refererUrl = new URL(referer);
+    const pageParam = refererUrl.searchParams.get("page");
+    if (pageParam) {
+      previousPage = `?page=${pageParam}`;
+      previousPageUrl = `/info${previousPage}`;
+    } else if (refererUrl.pathname.startsWith("/info")) {
+      // リファラーがinfoページからの場合はそのまま使用
+      previousPageUrl = referer;
+    }
+  } catch (e) {
+    console.error("Error parsing referer URL:", e);
+  }
+}
 ---
 
 <Layout title={content?.title || "記事が見つかりません"}>
   <div class="content-wrapper">
-    <Header title="Information" />
+    <Header title="Information" link={previousPageUrl} />
     {
       content ? (
         <div class="article-container">
@@ -67,7 +88,7 @@ const formattedDate = content
           <div class="article-body" set:html={content.content} />
 
           <div class="back-link">
-            <a href="/info">記事一覧に戻る</a>
+            <a href={`/info${previousPage}`}>記事一覧に戻る</a>
           </div>
         </div>
       ) : (
@@ -75,7 +96,7 @@ const formattedDate = content
           <h2>記事が見つかりませんでした</h2>
           <p>お探しの記事は存在しないか、削除された可能性があります。</p>
           <div class="back-link">
-            <a href="/info">記事一覧に戻る</a>
+            <a href={`/info${previousPage}`}>記事一覧に戻る</a>
           </div>
         </div>
       )

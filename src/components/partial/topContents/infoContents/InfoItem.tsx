@@ -25,7 +25,5 @@ export default function InfoItem(props: Props) {
         {props.excerpt && <div className={s.excerpt}>{props.excerpt}</div>}
       </div>
     </div>
-
-
   )
 }
