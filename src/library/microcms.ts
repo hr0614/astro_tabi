@@ -30,6 +30,7 @@ export type Article = {
   },
   content?: string,
   category: string[],
+  date?: Date,
 } & MicroCMSListContent;
 
 export const getArticles = async (queries?: MicroCMSQueries) => {

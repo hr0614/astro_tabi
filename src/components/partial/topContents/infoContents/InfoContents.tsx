@@ -10,6 +10,8 @@ type Item = {
   },
   content?: string,
   publishedAt: string,
+  Date?: string,
+  date?: string, // 小文字バージョンも対応
   category: string[],
 }
 
@@ -91,6 +93,19 @@ export const InfoContents = () => {
       }
 
       const data = await res.json()
+      console.log('API response data:', data.contents)
+
+      // デバッグ: 各記事の日付関連フィールドを確認
+      data.contents.forEach((item: any, index: number) => {
+        console.log(`Item ${index}:`, {
+          id: item.id,
+          title: item.title,
+          Date: item.Date,
+          date: item.date,
+          publishedAt: item.publishedAt
+        });
+      });
+
       setItems(data.contents)
     } catch (error) {
       console.error('Failed to fetch items:', error)
@@ -130,13 +145,22 @@ export const InfoContents = () => {
     <div className={s.infoList} >
       <ul className={s.infoItems}>
         {items && items.slice(0, displayLimit).map((item, index) => {
+          // 日付として使用する値を決定（Dateまたはdateがあればそれを使用、なければpublishedAt）
+          const displayDate = item.Date || item.date || item.publishedAt;
+          console.log(`Item ${index} display date:`, {
+            itemDate: item.Date,
+            itemdate: item.date,
+            publishedAt: item.publishedAt,
+            finalDisplayDate: displayDate
+          });
+
           return (
             <li className={s.item} key={index}>
               <a href={`/info/${item.id}`} className={s.articleLink}>
                 <InfoItem
                   title={item.title}
                   imageUrl={item.thumbnail?.url}
-                  date={item.publishedAt}
+                  date={displayDate}
                   category={item.category[0]}
                   excerpt={createExcerpt(item.content)} />
               </a>
