@@ -18,19 +18,21 @@ import {
     <nav class="mobile-nav">
       <ul class="menu-items">
         <li class="menu-item">
-          <a href="/gallery" class="menu-link illust">Illust</a>
+          <a href="/#illust-section" class="menu-link illust anchor-link"
+            >Illust</a
+          >
         </li>
         <li class="menu-item">
-          <a href="/works" class="menu-link">Work</a>
+          <a href="/#work-section" class="menu-link anchor-link">Work</a>
         </li>
         <li class="menu-item">
-          <a href="/info" class="menu-link">Info</a>
+          <a href="/#info-section" class="menu-link anchor-link">Info</a>
         </li>
         <li class="menu-item">
-          <a href="/profile" class="menu-link">Profile</a>
+          <a href="/#profile-section" class="menu-link anchor-link">Profile</a>
         </li>
         <li class="menu-item">
-          <a href="/contact" class="menu-link">Contact</a>
+          <a href="/#contact-section" class="menu-link anchor-link">Contact</a>
         </li>
       </ul>
     </nav>
@@ -53,6 +55,54 @@ import {
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // アンカーリンクがクリックされたときの処理
+    const anchorLinks = document.querySelectorAll(".anchor-link");
+    const menuOverlay = document.querySelector(".mobile-menu-overlay");
+
+    anchorLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        // 同じページ内のリンクの場合のみイベントを処理
+        if (link.getAttribute("href")?.startsWith("/#")) {
+          e.preventDefault();
+
+          // メニューを閉じる
+          menuOverlay?.classList.remove("active");
+          document.body.style.overflow = "";
+
+          // ハッシュ部分を抽出
+          const href = link.getAttribute("href") || "";
+          const hash = href.substring(href.indexOf("#"));
+          const targetId = hash.substring(1);
+          const targetElement = document.getElementById(targetId);
+
+          if (targetElement) {
+            // スクロール実行前にわずかな遅延を設ける
+            setTimeout(() => {
+              // スクロール位置を計算
+              const rect = targetElement.getBoundingClientRect();
+              const scrollTop =
+                window.pageYOffset || document.documentElement.scrollTop;
+              const offsetPosition = rect.top + scrollTop;
+
+              // スムーズスクロール実行
+              window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth",
+              });
+            }, 50);
+          }
+        } else {
+          // 外部リンクまたは他ページへのリンクの場合はメニューだけ閉じる
+          menuOverlay?.classList.remove("active");
+          document.body.style.overflow = "";
+        }
+      });
+    });
+  });
+</script>
 
 <style>
   .mobile-menu-overlay {
