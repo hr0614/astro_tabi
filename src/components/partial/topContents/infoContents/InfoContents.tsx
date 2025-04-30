@@ -82,7 +82,7 @@ export const InfoContents = () => {
   // 記事取得関数 - 常に最大数(6件)を取得
   const fetchItems = async () => {
     try {
-      const res = await fetch(`https://hari-test.microcms.io/api/v1/info?limit=6`, {
+      const res = await fetch(`https://tabi.microcms.io/api/v1/info?limit=6`, {
         headers: {
           "X-MICROCMS-API-KEY": import.meta.env.PUBLIC_MICROCMS_API_KEY || '',
         },

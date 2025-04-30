@@ -36,6 +36,9 @@ export const ArticleList = () => {
       setCurrentPage(Number(pageParam));
     }
 
+    // 初期化フラグを設定
+    setInitialized(true);
+
     // popstate（ブラウザの戻る・進むボタン）時のページ更新処理
     const handlePopState = () => {
       const newUrlParams = new URLSearchParams(window.location.search);
@@ -69,7 +72,7 @@ export const ArticleList = () => {
 
       try {
         // エンドポイント構築
-        let endpoint = "https://hari-test.microcms.io/api/v1/info";
+        let endpoint = "https://tabi.microcms.io/api/v1/info";
         const queryParams = [];
 
         // ページネーション情報を追加
@@ -82,14 +85,19 @@ export const ArticleList = () => {
         }
 
         console.log("フェッチするエンドポイント:", endpoint);
+        const apiKey = import.meta.env.PUBLIC_MICROCMS_API_KEY || '';
+        console.log("APIキーが設定されているか:", apiKey ? "はい" : "いいえ");
 
         const res = await fetch(endpoint, {
           headers: {
-            "X-MICROCMS-API-KEY": import.meta.env.PUBLIC_MICROCMS_API_KEY || '',
+            "X-MICROCMS-API-KEY": apiKey,
           },
         });
 
         if (!res.ok) {
+          console.error(`APIエラー: ${res.status} - ${res.statusText}`);
+          const errorText = await res.text();
+          console.error(`エラーの詳細: ${errorText}`);
           throw new Error(`APIエラー: ${res.status}`);
         }
 
