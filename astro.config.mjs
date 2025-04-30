@@ -5,6 +5,6 @@ import react from '@astrojs/react';
 // https://astro.build/config
 export default defineConfig({
   integrations: [react()],
+  site: 'https://hr0614.github.io',
   output: 'static',
-  base: '/astro_tabi',
 });
