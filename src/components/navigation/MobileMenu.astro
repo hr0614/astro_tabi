@@ -57,50 +57,68 @@ import {
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // アンカーリンクがクリックされたときの処理
-    const anchorLinks = document.querySelectorAll(".anchor-link");
-    const menuOverlay = document.querySelector(".mobile-menu-overlay");
+  // メニューのリンククリックとクローズを初期化する関数
+  function initMenuLinks() {
+    // モバイルメニューコンテナを取得
+    const menuContainer = document.querySelector(".mobile-menu-container");
 
-    anchorLinks.forEach((link) => {
-      link.addEventListener("click", (e) => {
-        // 同じページ内のリンクの場合のみイベントを処理
-        if (link.getAttribute("href")?.startsWith("/#")) {
-          e.preventDefault();
+    // メニューコンテナ全体のクリックを監視
+    menuContainer?.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
 
-          // メニューを閉じる
-          menuOverlay?.classList.remove("active");
-          document.body.style.overflow = "";
+      // クリックされた要素またはその親要素がアンカーリンクかどうかを確認
+      const link = target.closest(".anchor-link") as HTMLAnchorElement | null;
 
+      if (link) {
+        // リンクがクリックされた場合はデフォルト動作を防止
+        e.preventDefault();
+
+        // メニューを閉じる
+        const menuOverlay = document.querySelector(".mobile-menu-overlay");
+        menuOverlay?.classList.remove("active");
+        document.body.style.overflow = "";
+
+        // リンク先が/#で始まる場合（ページ内リンク）
+        const href = link.getAttribute("href") || "";
+        if (href.startsWith("/#")) {
           // ハッシュ部分を抽出
-          const href = link.getAttribute("href") || "";
           const hash = href.substring(href.indexOf("#"));
           const targetId = hash.substring(1);
+
+          // ターゲット要素を取得
           const targetElement = document.getElementById(targetId);
 
+          // ターゲット要素が存在する場合、少し遅延してからスクロール
           if (targetElement) {
-            // スクロール実行前にわずかな遅延を設ける
             setTimeout(() => {
-              // スクロール位置を計算
-              const rect = targetElement.getBoundingClientRect();
-              const scrollTop =
-                window.pageYOffset || document.documentElement.scrollTop;
-              const offsetPosition = rect.top + scrollTop;
+              window.location.href = href; // URLのハッシュを更新
 
-              // スムーズスクロール実行
+              // スクロール位置計算
+              const rect = targetElement.getBoundingClientRect();
+              const offsetPosition = rect.top + window.scrollY;
+
+              // スムーズスクロール
               window.scrollTo({
                 top: offsetPosition,
                 behavior: "smooth",
               });
-            }, 50);
+            }, 200); // メニューが閉じるのを待つ
           }
-        } else {
-          // 外部リンクまたは他ページへのリンクの場合はメニューだけ閉じる
-          menuOverlay?.classList.remove("active");
-          document.body.style.overflow = "";
         }
-      });
+      }
     });
+  }
+
+  // 通常のページ読み込み時
+  document.addEventListener("DOMContentLoaded", initMenuLinks);
+
+  // Astroのビュートランジション後
+  document.addEventListener("astro:page-load", initMenuLinks);
+
+  // Astroのページスワップ後も実行（確実に初期化するため）
+  document.addEventListener("astro:after-swap", () => {
+    // 少し遅延させて実行（DOMの更新を待つ）
+    setTimeout(initMenuLinks, 100);
   });
 </script>
 
