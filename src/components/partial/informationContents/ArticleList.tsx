@@ -26,22 +26,27 @@ export const ArticleList = () => {
 
   // コンポーネントマウント時に一度だけURLパラメータを取得
   useEffect(() => {
-    // URLからページパラメータのみを取得
-    const params = new URLSearchParams(window.location.search);
-    const pageParam = params.get('page');
+    // URLクエリパラメータからページ番号を取得
+    const urlParams = new URLSearchParams(window.location.search);
+    const pageParam = urlParams.get('page');
+    // console.log("初期ページパラメータ:", pageParam);
 
-    console.log("初期ページパラメータ:", pageParam);
-    setCurrentPage(pageParam ? parseInt(pageParam) : 1);
-    setInitialized(true);
+    // パラメータが存在し、数値に変換できる場合のみcurrentPageを更新
+    if (pageParam && !isNaN(Number(pageParam))) {
+      setCurrentPage(Number(pageParam));
+    }
 
-    // URLパラメータが変更された時にも再取得できるように
-    // popstateイベントをリッスン
+    // popstate（ブラウザの戻る・進むボタン）時のページ更新処理
     const handlePopState = () => {
-      const newParams = new URLSearchParams(window.location.search);
-      const newPageParam = newParams.get('page');
+      const newUrlParams = new URLSearchParams(window.location.search);
+      const newPageParam = newUrlParams.get('page');
+      // console.log("popstate後のページパラメータ:", newPageParam);
 
-      console.log("popstate後のページパラメータ:", newPageParam);
-      setCurrentPage(newPageParam ? parseInt(newPageParam) : 1);
+      if (newPageParam && !isNaN(Number(newPageParam))) {
+        setCurrentPage(Number(newPageParam));
+      } else {
+        setCurrentPage(1); // パラメータがない場合は1ページ目に戻る
+      }
     };
 
     window.addEventListener('popstate', handlePopState);

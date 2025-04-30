@@ -236,98 +236,85 @@ import { faCopy } from "@fortawesome/free-solid-svg-icons";
   </style>
 
   <script>
-    // テキストをクリップボードにコピーする汎用関数
-    function copyTextToClipboard(text: string, messageEl: HTMLElement | null) {
-      console.log("Copying text to clipboard:", text);
-
-      navigator.clipboard
-        .writeText(text)
-        .then(() => {
-          console.log("Text copied to clipboard");
-          if (messageEl) {
-            messageEl.style.opacity = "1";
-
-            // 3秒後にメッセージを非表示
-            setTimeout(() => {
-              messageEl.style.opacity = "0";
-            }, 3000);
-          }
-        })
-        .catch((err) => {
-          console.error("クリップボードへのコピーに失敗しました:", err);
-          alert("クリップボードへのコピーに失敗しました。");
-        });
+    // クリップボードにテキストをコピーする関数
+    async function copyTextToClipboard(text: string) {
+      try {
+        // console.log("Copying text to clipboard:", text);
+        await navigator.clipboard.writeText(text);
+        // console.log("Text copied to clipboard");
+        return true;
+      } catch (err) {
+        console.error("Failed to copy text: ", err);
+        return false;
+      }
     }
 
-    // コピーボタンの初期化関数
+    // コピーボタンの初期化
     function initCopyButtons() {
-      console.log("Initializing copy buttons...");
-
-      // テンプレート用コピーボタン
-      const templateBtn = document.getElementById("template-btn");
-      const templateTxt = document.getElementById("txt");
-      const templateCopyMessage = document.getElementById(
-        "template-copy-message",
-      );
-
-      // メールアドレス用コピーボタン
-      const mailBtn = document.getElementById("mail-btn");
-      const mailText = document.getElementById("mail-text");
-      const mailCopyMessage = document.getElementById("mail-copy-message");
-
-      // テンプレートのコピーボタン設定
-      if (templateBtn && templateTxt && templateCopyMessage) {
-        console.log("Template copy button elements found");
-
-        // 既存のイベントリスナーを削除（重複防止）
-        templateBtn.removeEventListener("click", handleTemplateCopy);
-
-        // 新しいイベントリスナーを追加
-        templateBtn.addEventListener("click", handleTemplateCopy);
-
-        // テンプレートコピー処理
-        function handleTemplateCopy() {
-          console.log("Template copy button clicked");
-          const textContent =
-            templateTxt?.innerText || templateTxt?.textContent || "";
-          copyTextToClipboard(textContent, templateCopyMessage);
-        }
-      } else {
-        console.warn("Template copy button elements not found");
-      }
-
-      // メールアドレスのコピーボタン設定
-      if (mailBtn && mailText && mailCopyMessage) {
-        console.log("Mail copy button elements found");
-
-        // 既存のイベントリスナーを削除（重複防止）
-        mailBtn.removeEventListener("click", handleMailCopy);
-
-        // 新しいイベントリスナーを追加
-        mailBtn.addEventListener("click", handleMailCopy);
-
-        // メールコピー処理
-        function handleMailCopy() {
-          console.log("Mail copy button clicked");
-          const textContent =
-            mailText?.innerText || mailText?.textContent || "";
-          copyTextToClipboard(textContent, mailCopyMessage);
-        }
-      } else {
-        console.warn("Mail copy button elements not found");
-      }
+      // console.log("Initializing copy buttons...");
+      initTemplateCopyButtons();
+      initMailCopyButtons();
     }
 
-    // 通常のページ読み込み時
+    // テンプレートコピーボタンの初期化
+    function initTemplateCopyButtons() {
+      const templateCopyButtons = document.querySelectorAll(
+        ".template-copy-button",
+      );
+      // console.log("Template copy button elements found", templateCopyButtons.length);
+
+      templateCopyButtons.forEach((button) => {
+        button.addEventListener("click", async () => {
+          // console.log("Template copy button clicked");
+          const targetId = button.getAttribute("data-target");
+          const templateText =
+            document.getElementById(targetId || "")?.textContent || "";
+
+          if (templateText) {
+            const success = await copyTextToClipboard(templateText.trim());
+            if (success) {
+              button.textContent = "コピーしました！";
+              setTimeout(() => {
+                button.textContent = "テンプレートをコピー";
+              }, 1500);
+            }
+          }
+        });
+      });
+    }
+
+    // メールアドレスコピーボタンの初期化
+    function initMailCopyButtons() {
+      const mailCopyButtons = document.querySelectorAll(".mail-copy-button");
+      // console.log("Mail copy button elements found", mailCopyButtons.length);
+
+      mailCopyButtons.forEach((button) => {
+        button.addEventListener("click", async () => {
+          // console.log("Mail copy button clicked");
+          const mailAddress = button.getAttribute("data-mail") || "";
+
+          if (mailAddress) {
+            const success = await copyTextToClipboard(mailAddress);
+            if (success) {
+              button.textContent = "コピーしました！";
+              setTimeout(() => {
+                button.textContent = "メールアドレスをコピー";
+              }, 1500);
+            }
+          }
+        });
+      });
+    }
+
+    // DOMの準備ができたら実行
     document.addEventListener("DOMContentLoaded", initCopyButtons);
 
-    // Astroのビュートランジション後
+    // Astroのページ遷移後に実行
     document.addEventListener("astro:page-load", initCopyButtons);
 
-    // Astroのページスワップ後も実行（確実に初期化するため）
-    document.addEventListener("astro:after-swap", () => {
-      console.log("Page content swapped, reinitializing copy buttons");
-      // 少し遅延させて実行（DOMの更新を待つ）
+    // DOMの内容が入れ替わった後にも実行
+    document.addEventListener("astro:after-swap", function () {
+      // console.log("Page content swapped, reinitializing copy buttons");
       setTimeout(initCopyButtons, 100);
     });
   </script>

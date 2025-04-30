@@ -36,11 +36,11 @@ const { title, defaultTransition = "fade" } = Astro.props;
 				() => {
 					// 現在のURLを保存
 					let currentPath = window.location.pathname;
-					console.log("Page loaded. Current path:", currentPath);
+					// console.log("Page loaded. Current path:", currentPath);
 
 					// 遷移用のフラグ（TOPページから遷移してきたかどうか）
 					let cameFromTop = sessionStorage.getItem("cameFromTop") === "true";
-					console.log("Came from top page:", cameFromTop);
+					// console.log("Came from top page:", cameFromTop);
 
 					// TOPページの場合、次の遷移先のためにフラグをセット
 					if (currentPath === "/") {
@@ -113,6 +113,79 @@ const { title, defaultTransition = "fade" } = Astro.props;
 			document.addEventListener("astro:after-preparation", () => {
 				console.log("View transition preparation completed");
 			});
+
+			// ページ読み込み時の処理
+			document.addEventListener("DOMContentLoaded", () => {
+				const currentPath = window.location.pathname;
+				// console.log("Page loaded. Current path:", currentPath);
+
+				// TOP ページからの遷移かどうかを確認
+				const cameFromTop = sessionStorage.getItem("cameFromTop") === "true";
+				// console.log("Came from top page:", cameFromTop);
+
+				// 前後移動のためのイベントリスナー設定
+				initPageTransitions();
+			});
+
+			// ページトランジションの初期化
+			function initPageTransitions() {
+				// 戻る・進むボタンのイベントをリッスン
+				window.addEventListener("popstate", (event) => {
+					// console.log(
+					//   "Navigation popstate event detected",
+					//   window.location.pathname,
+					// );
+
+					// TOP ページに戻った場合
+					if (window.location.pathname === "/") {
+						// console.log(
+						//   "Navigated back to home page",
+						//   window.location.pathname,
+						// );
+
+						// TOP ページから別のページへ移動した後に戻ってきた場合は強制リロード
+						if (
+							document.referrer &&
+							document.referrer.includes(window.location.host)
+						) {
+							// console.log("Navigating back to top page, forcing reload");
+							window.location.reload();
+						}
+					}
+				});
+
+				// Astro View Transitions が終了した後の処理
+				document.addEventListener("astro:page-load", () => {
+					// スクロール位置をリセット
+					window.scrollTo(0, 0);
+
+					// モバイルメニューをクローズ
+					const menuOverlay = document.querySelector(".mobile-menu-overlay");
+					if (menuOverlay) {
+						// console.log(
+						//   "Navigation complete, closing mobile menu if open"
+						// );
+						menuOverlay.classList.remove("active");
+						document.body.style.overflow = "";
+					}
+
+					// TOP ページからの遷移情報をクリア
+					sessionStorage.removeItem("cameFromTop");
+				});
+
+				// ビュートランジション準備完了イベント
+				document.addEventListener("astro:before-preparation", () => {
+					// console.log(
+					//   "View transition preparation started",
+					//   window.location.pathname,
+					// );
+				});
+
+				// ビュートランジション準備完了イベント
+				document.addEventListener("astro:after-preparation", () => {
+					// console.log("View transition preparation completed");
+				});
+			}
 		</script>
 	</head>
 	<body>

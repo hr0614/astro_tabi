@@ -1,9 +1,10 @@
 ---
+import { Image } from "astro:assets";
 import { isTemplateLiteralToken } from "typescript";
 import { getWorkList } from "../../../library/microcms";
 import ContentsBase from "../../UIcontent/background/ContentsBase.astro";
 const response = await getWorkList({ orders: "-date", limit: 10 });
-console.log("hoge", response.contents);
+// console.log("hoge", response.contents);
 import dayjs from "dayjs";
 import "dayjs/locale/ja";
 dayjs.locale("ja");

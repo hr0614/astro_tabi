@@ -63,7 +63,7 @@ export const InfoContents = () => {
       }
 
       setDisplayLimit(limit);
-      console.log(`Display limit set to: ${limit}, width: ${width}, height: ${window.innerHeight}, lowHeight: ${lowHeight}, width <= 820: ${width <= 820}`);
+      // console.log(`Display limit set to: ${limit}, width: ${width}, height: ${window.innerHeight}, lowHeight: ${lowHeight}, width <= 820: ${width <= 820}`);
     }
 
     // 初期チェック
@@ -93,17 +93,17 @@ export const InfoContents = () => {
       }
 
       const data = await res.json()
-      console.log('API response data:', data.contents)
+      // console.log('API response data:', data.contents)
 
       // デバッグ: 各記事の日付関連フィールドを確認
       data.contents.forEach((item: any, index: number) => {
-        console.log(`Item ${index}:`, {
-          id: item.id,
-          title: item.title,
-          Date: item.Date,
-          date: item.date,
-          publishedAt: item.publishedAt
-        });
+        // console.log(`Item ${index}:`, {
+        //   id: item.id,
+        //   title: item.title,
+        //   Date: item.Date,
+        //   date: item.date,
+        //   publishedAt: item.publishedAt
+        // });
       });
 
       setItems(data.contents)
@@ -115,7 +115,7 @@ export const InfoContents = () => {
   // 初期化時に一度だけ記事を取得
   useEffect(() => {
     if (isInitialized) {
-      console.log('Fetching items once at initialization');
+      // console.log('Fetching items once at initialization');
       fetchItems();
     }
   }, [isInitialized])
@@ -147,12 +147,12 @@ export const InfoContents = () => {
         {items && items.slice(0, displayLimit).map((item, index) => {
           // 日付として使用する値を決定（Dateまたはdateがあればそれを使用、なければpublishedAt）
           const displayDate = item.Date || item.date || item.publishedAt;
-          console.log(`Item ${index} display date:`, {
-            itemDate: item.Date,
-            itemdate: item.date,
-            publishedAt: item.publishedAt,
-            finalDisplayDate: displayDate
-          });
+          // console.log(`Item ${index} display date:`, {
+          //   itemDate: item.Date,
+          //   itemdate: item.date,
+          //   publishedAt: item.publishedAt,
+          //   finalDisplayDate: displayDate
+          // });
 
           return (
             <li className={s.item} key={index}>
