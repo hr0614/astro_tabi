@@ -79,12 +79,6 @@ if (referer) {
             <h1 class="title">{content.title}</h1>
           </div>
 
-          {/* {content.thumbnail && (
-            <div class="thumbnail">
-              <img src={content.thumbnail.url} alt={content.title} />
-            </div>
-          )} */}
-
           <div class="article-body" set:html={content.content} />
 
           <div class="back-link">
@@ -152,15 +146,15 @@ if (referer) {
     margin-bottom: 30px;
   }
 
-  .article-header {
+  /* .article-header {
     margin-bottom: 30px;
-  }
+  } */
 
   .category-badge {
     display: inline-block;
-    padding: 3px 10px;
-    border-radius: 15px;
-    font-size: 12px;
+    padding: 3px 5px;
+    /* border-radius: 15px; */
+    font-size: 11px;
     color: #fff;
     background-color: #5fd3c6;
     margin-right: 10px;
@@ -188,7 +182,7 @@ if (referer) {
   .title {
     font-family: "M PLUS Rounded 1c";
     font-size: 24px;
-    margin-top: 10px;
+    margin: 20px 0;
     color: #1d2027;
   }
 
@@ -227,5 +221,22 @@ if (referer) {
     max-width: 70%;
     height: auto;
     display: block;
+  }
+
+  @media screen and (max-width: 719px) {
+    .article-container,
+    .error-container {
+      width: 90%;
+      padding: 10px;
+    }
+    .title {
+      font-size: 18px;
+    }
+    .article-body {
+      font-size: 14px;
+    }
+    .article-header {
+      margin-bottom: 10px;
+    }
   }
 </style>

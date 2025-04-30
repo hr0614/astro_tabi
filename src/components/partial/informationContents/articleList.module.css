@@ -101,7 +101,7 @@
   color: #555;
 }
 
-@media screen and (max-width: 719px; ) {
+@media screen and (max-width: 719px) {
   .articleList {
     width: 90%;
   }
