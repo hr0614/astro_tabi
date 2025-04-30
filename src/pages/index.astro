@@ -103,7 +103,7 @@ import footImage from "../img/footImage/ViewMore_A.png";
           // 正確なスクロール位置を計算
           const rect = targetElement.getBoundingClientRect();
           const scrollTop =
-            window.pageYOffset || document.documentElement.scrollTop;
+            window.scrollY || document.documentElement.scrollTop;
           const offsetPosition = rect.top + scrollTop;
 
           // スムーズスクロール実行
