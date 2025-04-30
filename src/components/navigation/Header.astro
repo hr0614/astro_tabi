@@ -1,0 +1,159 @@
+---
+import MobileMenu from "./MobileMenu.astro";
+
+// 現在のパスを取得してTOPページかどうかを判定
+const currentPath = Astro.url.pathname;
+const isTopPage = currentPath === "/";
+---
+
+<header class="site-header">
+  {isTopPage && (
+    <div class="header-container">
+      <button
+        class="menu-toggle"
+        id="menu-toggle"
+        aria-label="モバイルメニューを開く"
+      >
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </button>
+    </div>
+    <MobileMenu />
+  )}
+</header>
+
+<script>
+  // メニュー開閉処理を初期化する関数
+  function initMenuToggle() {
+    const menuToggle = document.getElementById("menu-toggle");
+    const closeButton = document.getElementById("menu-close-button");
+    const menuOverlay = document.querySelector(".mobile-menu-overlay");
+
+    // 既存のイベントリスナーを削除（重複防止）
+    menuToggle?.removeEventListener("click", handleMenuOpen as EventListener);
+    closeButton?.removeEventListener("click", handleMenuClose as EventListener);
+    menuOverlay?.removeEventListener("click", handleOverlayClick as EventListener);
+
+    // メニューを開く
+    menuToggle?.addEventListener("click", handleMenuOpen as EventListener);
+
+    // メニューを閉じる
+    closeButton?.addEventListener("click", handleMenuClose as EventListener);
+
+    // オーバーレイクリックでメニューを閉じる
+    menuOverlay?.addEventListener("click", handleOverlayClick as EventListener);
+  }
+
+  // メニューを開く処理
+  function handleMenuOpen() {
+    const menuOverlay = document.querySelector(".mobile-menu-overlay");
+    menuOverlay?.classList.add("active");
+    document.body.style.overflow = "hidden"; // スクロール防止
+  }
+
+  // メニューを閉じる処理
+  function handleMenuClose() {
+    const menuOverlay = document.querySelector(".mobile-menu-overlay");
+    menuOverlay?.classList.remove("active");
+    document.body.style.overflow = ""; // スクロール許可
+  }
+
+  // オーバーレイクリック処理
+  function handleOverlayClick(e: MouseEvent) {
+    const menuOverlay = document.querySelector(".mobile-menu-overlay");
+    if (e.target === menuOverlay) {
+      menuOverlay?.classList.remove("active");
+      document.body.style.overflow = "";
+    }
+  }
+
+  // 通常のページ読み込み時
+  document.addEventListener("DOMContentLoaded", initMenuToggle);
+
+  // Astroのビュートランジション後
+  document.addEventListener("astro:page-load", initMenuToggle);
+
+  // Astroのページスワップ後も実行（確実に初期化するため）
+  document.addEventListener("astro:after-swap", () => {
+    // 少し遅延させて実行（DOMの更新を待つ）
+    setTimeout(initMenuToggle, 100);
+  });
+</script>
+
+<style>
+  .site-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: auto;
+    z-index: 100;
+    padding: 10px;
+  }
+
+  .header-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0;
+  }
+
+  .site-logo a {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: #1d2027;
+  }
+
+  .logo-text {
+    font-size: 24px;
+    font-weight: normal;
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+  }
+
+  .logo-subtitle {
+    font-size: 12px;
+    font-family: "Montserrat", sans-serif;
+  }
+
+  .menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #5fd3c6;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 20px;
+    height: 16px;
+  }
+
+  .bar {
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    border-radius: 1px;
+    transition:
+      transform 0.3s,
+      opacity 0.3s;
+  }
+
+  @media (min-width: 840px) {
+    .menu-toggle {
+      display: none;
+    }
+  }
+</style>

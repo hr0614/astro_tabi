@@ -62,11 +62,20 @@ import profileImg from "../../../img/profile/icon.png";
       font-size: 28px;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 720px) {
       .main-wrapper {
         flex-direction: column;
         text-align: center;
         gap: 30px;
+      }
+
+      .contents {
+        flex-direction: column;
+      }
+
+      .profile-img {
+        margin-right: 0;
+        margin-bottom: 15px;
       }
 
       .profile-content {
@@ -78,6 +87,14 @@ import profileImg from "../../../img/profile/icon.png";
 
       .contents-wrapper {
         padding: 40px 20px;
+      }
+      .name {
+        font-size: 24px;
+        margin-bottom: 5px;
+      }
+
+      .profile-text {
+        font-size: 14px;
       }
     }
   </style>

@@ -18,17 +18,18 @@ import footImage from "../img/footImage/ViewMore_A.png";
 ---
 
 <Layout title="tabi:) Illustration">
-  <div class="container">
+  <div class="container" id="main-container">
     <!-- TOPページ -->
     <Section color="gray" rounded={false} isTop={true}><Top /></Section>
 
     <!-- Infoセクション -->
     <Section
       color="#DADEDD"
-      height="600px"
+      height="100dvh"
       headImage={infoHeadImage}
       footImage={footImage}
       link="/info"
+      id="info-section"
     >
       <ProfileBg slot="background" />
       <Info />
@@ -37,10 +38,11 @@ import footImage from "../img/footImage/ViewMore_A.png";
     <!-- Illustセクション -->
     <Section
       color="#DADEDD"
-      height="600px"
+      height="100dvh"
       headImage={illustHeadImage}
       footImage={footImage}
       link="/gallery"
+      id="illust-section"
     >
       <ContactBg slot="background" />
       <Illust />
@@ -49,33 +51,134 @@ import footImage from "../img/footImage/ViewMore_A.png";
     <!-- Workセクション -->
     <Section
       color="#DADEDD"
-      height="600px"
+      height="100dvh"
       headImage={workHeadImage}
       footImage={footImage}
       link="/works"
+      id="work-section"
     >
       <ContactBg slot="background" />
       <Work />
     </Section>
 
     <!-- Profileセクション -->
-    <Section color="#DADEDD" height="600px" headImage={profileHeadImage}>
+    <Section
+      color="#DADEDD"
+      height="100dvh"
+      headImage={profileHeadImage}
+      id="profile-section"
+    >
       <ProfileBg slot="background" />
       <Profile />
     </Section>
     <!-- Contactセクション -->
-    <Section color="#DADEDD" height="600px" headImage={contactHeadImage}>
+    <Section
+      color="#DADEDD"
+      height="100dvh"
+      headImage={contactHeadImage}
+      id="contact-section"
+    >
       <ContactBg slot="background" />
       <Contact />
     </Section>
   </div>
 </Layout>
 
+<script>
+  // ハッシュリンクからのアクセスがあったかどうかのフラグ
+  let hashLinkClicked = false;
+
+  // アンカーリンクからのスクロール時のスムーズスクロールを制御
+  document.addEventListener("DOMContentLoaded", () => {
+    // URLにハッシュがある場合は該当要素にスクロール
+    if (window.location.hash) {
+      hashLinkClicked = true; // ハッシュリンクからのアクセスとしてマーク
+
+      // 少し遅延させて確実にDOMが構築された後に実行
+      setTimeout(() => {
+        const targetId = window.location.hash.substring(1);
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          // 正確なスクロール位置を計算
+          const rect = targetElement.getBoundingClientRect();
+          const scrollTop =
+            window.pageYOffset || document.documentElement.scrollTop;
+          const offsetPosition = rect.top + scrollTop;
+
+          // スムーズスクロール実行
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+
+          // スクロール完了後にフラグをリセット（約1秒後）
+          setTimeout(() => {
+            hashLinkClicked = false;
+          }, 1000);
+        }
+      }, 100);
+    }
+
+    // メニューリンククリック時のフラグ設定を追加
+    document.querySelectorAll(".anchor-link").forEach((link) => {
+      link.addEventListener("click", () => {
+        hashLinkClicked = true;
+        // スクロール完了後にフラグをリセット（約1秒後）
+        setTimeout(() => {
+          hashLinkClicked = false;
+        }, 1000);
+      });
+    });
+
+    // セクションが表示された時にURLのハッシュを更新しない
+    // IntersectionObserverは必要な場合に備えて残してあるが、
+    // URLハッシュの自動更新機能は削除
+    const sections = document.querySelectorAll('section, [id$="-section"]');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // ハッシュリンクからのスクロール時のみURLを更新
+            // 通常のスクロールでは何もしない
+            if (hashLinkClicked) {
+              const id = entry.target.id;
+              if (id) {
+                history.replaceState(null, "", `/#${id}`);
+              }
+            }
+          }
+        });
+      },
+      { threshold: 0.5 },
+    ); // 50%以上表示されたら発火
+
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+  });
+</script>
+
 <style>
   .container {
     overflow: auto;
     scroll-snap-type: y mandatory;
-    height: 100vh;
+    height: 100dvh;
     background-color: color= "#DADEDD";
+    scroll-behavior: smooth;
+    scroll-padding-top: 0; /* スクロール位置の調整 */
+  }
+
+  /* 各セクションのscroll-snapを確実にする */
+  :global(section),
+  :global([id$="-section"]) {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    scroll-margin-top: 0; /* スクロール時のマージン調整 */
+  }
+
+  /* スクロールアンカーとセクションのスタイルを調整 */
+  :global(html) {
+    scroll-padding-top: 0;
   }
 </style>

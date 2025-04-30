@@ -2,7 +2,7 @@
 import { isTemplateLiteralToken } from "typescript";
 import { getWorkList } from "../../../library/microcms";
 import ContentsBase from "../../UIcontent/background/ContentsBase.astro";
-const response = await getWorkList({ orders: "-date" });
+const response = await getWorkList({ orders: "-date", limit: 10 });
 console.log("hoge", response.contents);
 import dayjs from "dayjs";
 import "dayjs/locale/ja";
@@ -48,10 +48,11 @@ const formatDate = (dateString: string) => {
     width: 85%;
     margin: 20px 0;
   }
+
   .list-item {
     display: flex;
     font-size: 14px;
-    margin-bottom: 12px;
+    margin-bottom: 5px;
     font-family: "M PLUS Rounded 1c";
   }
   .list-item a {
@@ -67,5 +68,17 @@ const formatDate = (dateString: string) => {
     margin-right: 15px;
     font-size: 13px;
     font-family: "Lexend Deca";
+  }
+
+  @media screen and (max-width: 839px) {
+    .contents-wrapper {
+      width: 95%;
+    }
+    .work-list {
+      width: 95%;
+    }
+    .list-item {
+      font-size: 12px;
+    }
   }
 </style>

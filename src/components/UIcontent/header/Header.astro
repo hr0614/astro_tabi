@@ -5,15 +5,16 @@ import { Image } from "astro:assets";
 import headImage from "../../../img/header/infoHead.png";
 interface Props {
   title: string;
+  link?: string;
 }
 
-const { title } = Astro.props;
+const { title, link = "/" } = Astro.props;
 ---
 
 <div class="head-container">
-  <a href="/" class="arrow"><FontAwesomeIcon icon={faArrowLeft} /></a>
+  <a href={link} class="arrow"><FontAwesomeIcon icon={faArrowLeft} /></a>
   <div class="title">
-    <p>{title}</p><Image class="head-image" src={headImage} alt="" />
+    <Image class="head-image" src={headImage} alt="" /><p>{title}</p>
   </div>
 </div>
 
@@ -50,8 +51,8 @@ const { title } = Astro.props;
     margin: 0 auto;
     width: 80%;
     max-width: 850px;
-    text-align: left;
-    border-bottom: 2px dashed white;
+    justify-content: center;
+    /* border-bottom: 2px dashed white; */
     font-family: "Rowdies Regular";
     font-size: 36px;
   }

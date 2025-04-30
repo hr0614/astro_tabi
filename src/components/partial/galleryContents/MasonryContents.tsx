@@ -12,11 +12,29 @@ type Item = {
   comment: string[],
 }
 
-export const Gallery = () => {
+export const MasonryContents = () => {
   // 初期値を設定せずに、ローディング状態を追加
   const [items, setItems] = useState<Item[]>([])
   const [category, setCategory] = useState<string | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
 
+  // レスポンシブ対応のためのスクリーンサイズチェック
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth <= 719);
+    }
+
+    // 初期チェック
+    checkScreenSize();
+
+    // リサイズイベントリスナー
+    window.addEventListener('resize', checkScreenSize);
+
+    // クリーンアップ
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    }
+  }, []);
 
   // コンポーネントマウント時に一度だけURLパラメータを取得
   useEffect(() => {
@@ -56,14 +74,13 @@ export const Gallery = () => {
 
   return (
     <div className={s.wrapper}>
-      <a href="/" className={s.back_to_top}><i className="fa-solid fa-arrow-left"></i></a>
       <div className={s.header}>
         <a href="/gallery" className={`${s.nav} ${isOriginalActive ? s.active : ''}`}>Original</a>
         <a href="/gallery?category=Work" className={`${s.nav} ${isWorkActive ? s.active : ''}`}>Work</a>
       </div>
       <div className={s.image_area}>
         <Masonry
-          columns={4}
+          columns={isMobile ? 3 : 4}
           gap={16}
         >
           {items && items.map((item, index) => {
@@ -76,5 +93,3 @@ export const Gallery = () => {
     </div>
   )
 }
-
-

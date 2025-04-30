@@ -9,6 +9,10 @@
   flex-direction: row;
 }
 
+
+
+
+
 .dateWrapper {
   display: flex;
   flex-direction: row;
@@ -24,12 +28,7 @@
   position: relative;
 }
 
-@media screen and (max-width: 839px) {
-  .imageArea {
-    width: 170px;
-    height: 120px;
-  }
-}
+
 
 .imageArea img {
   width: 100%;
@@ -45,9 +44,10 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding-bottom: 10px;
   min-height: 150px;
 }
+
+
 
 .date {
   font-size: 14px;
@@ -56,11 +56,16 @@
   padding: 3px 10px;
 }
 
+.labelWrapper {
+  display: flex;
+  align-items: center;
+}
+
 .categoryLabel {
   font-family: 'M PLUS Rounded 1c';
-  font-size: 12px;
+  font-size: 11px;
   color: white;
-  padding: 4px 6px;
+  padding: 3px 5px;
 }
 
 /* カテゴリー別の背景色 */
@@ -83,13 +88,15 @@
   color: #1D2027;
   letter-spacing: 1px;
   padding: 0 10px 10px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
-@media screen and (max-width: 839px) {
-  .title {
-    font-size: 12px;
-  }
-}
+
+
 
 .excerpt {
   font-size: 12px;
@@ -105,6 +112,55 @@
   -webkit-box-orient: vertical;
 }
 
+
 @media screen and (max-width: 839px) {
-  -webkit-line-clamp: 2;
+  .title {
+    font-size: 12px;
+    -webkit-line-clamp: 2;
+    max-height: 2.8em;
+    line-height: 1.4;
+  }
+
+  .textArea {
+    min-height: 0px;
+  }
+
+  .itemWrapper {
+    min-height: 100px;
+  }
+
+  .imageArea {
+    width: 130px;
+    height: 110px;
+    min-width: 0px;
+  }
+
+  .excerpt {
+    -webkit-line-clamp: 2;
+  }
+}
+
+@media screen and (min-width: 720px) and (max-width: 920px) {
+  .title {
+    font-size: 13px;
+  }
+
+  .imageArea {
+    width: 18dvw;
+    height: auto;
+    min-width: auto;
+  }
+
+  .itemWrapper {
+    min-height: 120px;
+  }
+
+  .textArea {
+    min-height: auto;
+  }
+
+  .excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+  }
 }

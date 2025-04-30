@@ -1,6 +1,7 @@
 ---
 import Header from "../../UIcontent/header/Header.astro";
 import Layout from "../../../layouts/Layout.astro";
+import BackButton from "../../UIcontent/button/BackButton.astro";
 import { getWorkList } from "../../../library/microcms";
 import dayjs from "dayjs";
 import "dayjs/locale/ja";
@@ -85,32 +86,56 @@ const years = Object.keys(worksByYear)
         })
       }
     </div>
+    <BackButton />
   </div>
 </Layout>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+  function initAccordions() {
     const accordionButtons = document.querySelectorAll(".accordion-button");
 
     accordionButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const expanded = button.getAttribute("aria-expanded") === "true";
-        button.setAttribute("aria-expanded", expanded ? "false" : "true");
+      // 既存のイベントリスナーを削除（重複防止）
+      button.removeEventListener(
+        "click",
+        handleAccordionClick as EventListener,
+      );
 
-        const container = button
-          .closest(".year-section")
-          ?.querySelector(".work-list-container");
-        if (container) {
-          container.classList.toggle("active");
-        }
-      });
+      // 新しいイベントリスナーを追加
+      button.addEventListener("click", handleAccordionClick as EventListener);
     });
+  }
+
+  // クリックハンドラを関数として定義
+  function handleAccordionClick(event: MouseEvent) {
+    const button = event.currentTarget as HTMLButtonElement;
+    const expanded = button.getAttribute("aria-expanded") === "true";
+    button.setAttribute("aria-expanded", expanded ? "false" : "true");
+
+    const container = button
+      .closest(".year-section")
+      ?.querySelector(".work-list-container");
+    if (container) {
+      container.classList.toggle("active");
+    }
+  }
+
+  // 通常のページ読み込み時
+  document.addEventListener("DOMContentLoaded", initAccordions);
+
+  // Astroのビュートランジション後
+  document.addEventListener("astro:page-load", initAccordions);
+
+  // Astroのページスワップ後も実行（確実に初期化するため）
+  document.addEventListener("astro:after-swap", () => {
+    // 少し遅延させて実行（DOMの更新を待つ）
+    setTimeout(initAccordions, 100);
   });
 </script>
 
 <style>
   .content-wrapper {
-    min-height: 100vh;
+    min-height: 100dvh;
     background-color: #dadedd;
   }
 
@@ -131,12 +156,14 @@ const years = Object.keys(worksByYear)
 
   .accordion-button {
     width: 100%;
+    font-family: "Rowdies Regular";
     background-color: #f0f0f0;
+    color: #626262;
     border: none;
     padding: 5px 10px;
     text-align: left;
     font-size: 18px;
-    font-weight: bold;
+    /* font-weight: bold; */
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -201,5 +228,19 @@ const years = Object.keys(worksByYear)
 
   .list-item :hover {
     opacity: 0.8;
+  }
+
+  @media screen and (max-width: 839px) {
+    .works-container {
+      width: 90%;
+    }
+    .title {
+      font-size: 12px;
+    }
+    .date {
+      width: 70px;
+      font-size: 12px;
+      margin: 0;
+    }
   }
 </style>
